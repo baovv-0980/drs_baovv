@@ -1,1 +1,18 @@
 mailer: from@example.com
+users:
+  email: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i'
+  name_max: 50
+  email_max: 50
+divisions:
+  name_max: 50
+reports:
+  text_max: 1000
+  text_min: 10
+  title_max: 255
+  title_min: 10
+notifications:
+  title_max: 255
+  title_min: 10
+requests:
+  reason_max: 255
+  reason_min: 10
