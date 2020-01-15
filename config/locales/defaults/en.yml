@@ -1,0 +1,8 @@
+en:
+  title: InitProject
+  activerecord:
+    errors:
+      messages:
+        blank: Please do not leave it blank
+        too_short: String length too short
+        too_long: String length too long
