@@ -15,8 +15,8 @@ class User < ApplicationRecord
   has_many :senders, through: :sent_notifications, source: :sender
   has_many :receivers, through: :notifications, source: :receiver
 
-  validates :name, presence: true, length: {maximum: Settings.user.name_max}
-  validates :email, presence: true, length: {maximum: Settings.email_max},
+  validates :name, presence: true, length: {maximum: Settings.users.name_max}
+  validates :email, presence: true, length: {maximum: Settings.users.email_max},
                     format: {with: VALID_EMAIL_REGEX},
                     uniqueness: {case_sensitive: false}
   validates :birthday, presence: true

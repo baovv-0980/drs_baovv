@@ -4,5 +4,5 @@ class Division < ApplicationRecord
   belongs_to :parent, class_name: Division.name, optional: true
 
   validates :name, presence: true,
-             length: {maximum: Settings.divisons.name_max}
+             length: {maximum: Settings.divisions.name_max}
 end

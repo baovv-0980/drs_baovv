@@ -6,3 +6,20 @@ en:
         blank: Please do not leave it blank
         too_short: String length too short
         too_long: String length too long
+  layouts:
+    header:
+      title: Daily Reports System
+      reports: Reports
+      requests: Requests
+      notifi: Notifications
+      notifi_item1: Notifications 1
+      notifi_item2: Notifications 2
+      settings: Settings
+      profile: Profile
+      logout: Log out
+  time:
+    formats:
+      own: "%H:%M:%S, %d %B"
+      default: "%d-%m-%Y"
+      long: "%d %B, %Y"
+      short: "%d %b"

@@ -1,0 +1,28 @@
+<tr>
+  <td><%= report_counter += 1 %></td>
+  <td><%= report.id %></td>
+  <td><%= report.title %></td>
+  <td><%= l(report.created_at, format: :short)%></td>
+  <td><%= link_to t(".show"), "#", {"data-toggle": "modal", "data-target": "#report-#{report.id}"} %></td>
+</tr>
+
+<div class="modal fade" id="report-<%= report.id %>" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle"><%= report.title %></h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <small><%= t ".dialog_plan" %></small>
+      <p><%= report.plan %></p>
+      <small><%= t ".dialog_actual" %></small>
+      <p><%= report.actual %></p>
+      <small><%= t ".dialog_next_plan" %></small>
+      <p><%= report.next_plan %></p>
+      <small><%= t ".dialog_issual" %></small>
+      <p><%= report.issue %></p>
+  </div>
+</div>
