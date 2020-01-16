@@ -1,4 +1,6 @@
 class Report < ApplicationRecord
+  PARAMS = %i(title plan actual next_plan issue).freeze
+
   belongs_to :user
   has_many :notifications, as: :object
 

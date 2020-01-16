@@ -6,6 +6,7 @@ users:
 divisions:
   name_max: 50
 reports:
+  per_page: 7
   text_max: 1000
   text_min: 10
   title_max: 255

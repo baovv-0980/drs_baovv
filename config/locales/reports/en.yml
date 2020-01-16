@@ -1,0 +1,23 @@
+en:
+  reports:
+    index:
+      title: LIST DAILY REPORTS
+      create_btn: Create
+      report_id: REPORT ID
+      report_title: TITLE
+      report_time:  TIME REQUEST
+      report_action: ACTION
+      number: "#"
+    report:
+      show: Show
+      dialog_plan: Plan
+      dialog_actual: Actual
+      dialog_next_plan: Next Plan
+      dialog_issual: Issual
+    create:
+      create_report: The report has been generated
+      create_fault: Create an fault report
+    new:
+      new_report: New Report
+      placeholder: Write content here..
+      submit: Submit

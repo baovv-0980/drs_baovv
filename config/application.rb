@@ -22,10 +22,12 @@ module InitProject
 
     config.load_defaults 6.0
 
-    I18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    I18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
 
     I18n.available_locales = [:en, :vi]
 
     I18n.default_locale = :en
+
+    config.time_zone = "Asia/Bangkok"
   end
 end
