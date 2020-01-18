@@ -1,9 +1,34 @@
 class User < ApplicationRecord
+
+  def self.search(type,search)
+    if search.blank?
+      all
+    else
+      where(["#{type} LIKE ?","%#{search}%"])
+    end
+  end
+
+  def self.add(type,search)
+    if search.blank?
+      where(division_id: nil)
+    else
+      where(division_id: nil).where("#{type} LIKE ?","%#{search}%")
+    end
+  end
+
+  def self.search(type,search)
+    if search
+      where(["#{type} LIKE ?","%#{search}%"])
+    else
+      all
+    end
+  end
+
   VALID_EMAIL_REGEX = Settings.email
 
   enum role: {member: 0, manager: 1, admin: 2}
 
-  belongs_to :division
+  belongs_to :division, optional: true
   has_many :reports, dependent: :destroy
   has_many :requests, dependent: :destroy
 

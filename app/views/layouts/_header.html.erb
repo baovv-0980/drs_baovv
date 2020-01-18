@@ -9,7 +9,10 @@
     </li>
     <% if current_user.manager? %>
       <li class="nav-item">
-        <%= link_to t(".requests"), approve_requests_path, class: "nav-link" %>
+        <%= link_to t(".manage_request"), approve_requests_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to t(".manage_division"), manage_members_path, class: "nav-link" %>
       </li>
     <% end %>
   </ul>

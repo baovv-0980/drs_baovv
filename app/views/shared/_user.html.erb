@@ -1,0 +1,23 @@
+<tr>
+  <td><%= i+1 %></td>
+  <td><%= user.id %></td>
+  <% unless user.division.nil? %>
+    <td><%= user.division.name %></td>
+  <% else %>
+    <td>---</td>
+  <% end %>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+  <td><%= user.phone %></td>
+  <td><%= user.birthday %></td>
+  <td><%= user.skill %></td>
+  <td>
+    <% if user.division_id.nil? %>
+      <%= link_to t(".add"), add_member_path(user), method: :patch, data: {confirm: t(".add_sure")} %>
+    <% else %>
+      <% unless user.manager?%>
+        <%= link_to t(".delete"), manage_member_path(user), method: :patch, data: {confirm: t(".delete_sure")} %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

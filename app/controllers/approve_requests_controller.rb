@@ -1,6 +1,6 @@
 class ApproveRequestsController < ApplicationController
   before_action :manager_user
-  before_action :correct_request, only: [:update]
+  before_action :correct_request, only: [:update,:show]
 
   def index
     @requests = current_division.approval_requests.paginate(page: params[:page],
@@ -9,9 +9,6 @@ class ApproveRequestsController < ApplicationController
   end
 
   def show
-    @request = current_division.approval_requests.find_by(id: params[:id])
-    @reason_request = @request.request
-    @user = Request.find_by(id: @request.request_id).user
     respond_to do |format|
       format.html
       format.js

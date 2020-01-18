@@ -11,6 +11,8 @@ en:
       title: Daily Reports System
       reports: Reports
       requests: Requests
+      manage_request: Manage Request
+      manage_division: Manage Division
       notifi: Notifications
       notifi_item1: Notifications 1
       notifi_item2: Notifications 2
@@ -23,3 +25,7 @@ en:
       default: "%d-%m-%Y"
       long: "%d %B, %Y"
       short: "%d %b"
+  shared:
+    user:
+      add_sure: Are you sure you add this member from this division!
+      delete_sure: Are you sure you delete this member from this division!
