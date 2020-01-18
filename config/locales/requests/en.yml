@@ -17,6 +17,7 @@ en:
     create:
       create_request: The request has been generated
       create_fault: Create an fault request
+      highest_division: You are at the highest division
     destroy:
       destroy_fault: Destroy an fault request
     new:

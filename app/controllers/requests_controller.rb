@@ -4,7 +4,6 @@ class RequestsController < ApplicationController
   def index
     @requests = current_user.requests.paginate(page: params[:page],
                                     per_page: Settings.requests.per_page)
-    redirect_to root_path if @requests.blank?
   end
 
   def show
@@ -23,14 +22,15 @@ class RequestsController < ApplicationController
 
   def create
     @request = current_user.requests.build request_params
-    Request.transaction do
-      @request.save
-      @request.approval_requests.create! division_id: current_division.id
-      flash[:success] = t ".create_request"
-      redirect_to requests_path
-    rescue
-      flash.now[:success] = t ".create_fault"
-      render :new
+    if current_user.manager?
+      if current_user.division.parent_id.nil?
+        flash.now[:success] = t ".highest_division"
+        render :new
+      else
+        save_approval_request current_division.parent_id
+      end
+    elsif current_user.member?
+      save_approval_request current_division.id
     end
   end
 
@@ -40,7 +40,7 @@ class RequestsController < ApplicationController
       redirect_to request.referer || root_path
     else
       flash.now[:success] = t ".destroy_fault"
-      render :new
+      render :index
     end
   end
 
@@ -54,5 +54,17 @@ class RequestsController < ApplicationController
     @request = current_user.requests.find_by id: params[:id]
     flash[:success] = t ".destroy_fault"
     redirect_to root_path if @request.nil?
+  end
+
+  def save_approval_request division_id
+    Request.transaction do
+      @request.save
+      @request.approval_requests.create! division_id: division_id
+      flash[:success] = t ".create_request"
+      redirect_to requests_path
+    rescue StandardError
+      flash.now[:success] = t ".create_fault"
+      render :new
+    end
   end
 end

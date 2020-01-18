@@ -1,26 +1,20 @@
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
   <div id="create-control">
-
-    <% unless current_user.division.parent_id.nil? %>
-      <div class="create">
-        <%= link_to t(".create_btn"), new_request_path, class: "btn btn-primary" %>
-      </div>
-    <% end %>
+      <%= will_paginate @requests %>
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>
           <th scope="col"><%= t ".number" %></th>
           <th scope="col"><%= t ".request_id" %></th>
-          <th scope="col"><%= t ".request_title" %></th>
           <th scope="col"><%= t ".request_time" %></th>
-          <th scope="col"><%= t ".request_time_create" %></th>
           <th scope="col"><%= t ".request_status" %></th>
           <th scope="col"><%= t ".request_action" %></th>
         </tr>
         <tbody>
-          <%= will_paginate @requests %>
-          <%= render @requests %>
+          <% @requests.each_with_index do |request, i| %>
+            <%= render partial: "request", locals: {request: request, i: i} %>
+          <% end %>
         </tbody>
       </thead>
     </table>

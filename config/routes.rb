@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 
   resources :reports, except: [:edit, :update, :destroy]
   resources :requests, except: [:edit]
+  resources :approve_requests
 end

@@ -1,0 +1,15 @@
+<small><%= t ".dialog_user_name" %></small>
+<p><%= @user.name %></p>
+<small><%= t ".dialog_user_email" %></small>
+<p><%= @user.email %></p>
+<small><%= t ".dialog_time" %></small>
+<p><%= l(@request.created_at, format: :short) %></p>
+<small><%= t ".dialog_reason" %></small>
+<p><%= @reason_request.reason %><p>
+<% if @request.waiting? %>
+  <div class="center">
+    <%= link_to t(".approve"), approve_request_path(@request, status: "approval"), method: :patch, class: "btn btn-primary" %>
+    <%= link_to t(".reject"), approve_request_path(@request, status: "rejected"), method: :patch, class: "btn btn-danger"%>
+  </div>
+<% end %>
+
