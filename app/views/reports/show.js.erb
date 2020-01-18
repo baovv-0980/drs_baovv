@@ -1,0 +1,6 @@
+$("#flash").html('<%= j render partial: "shared/notice_banner" %>');
+<% unless @report.blank? %>
+  $("#modal_body").html("<%= j(render partial: "reports/content")%>");
+<% else %>
+  $("show_dialog").css("display", "none")
+<% end %>

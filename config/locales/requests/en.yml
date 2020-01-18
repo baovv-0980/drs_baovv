@@ -1,0 +1,35 @@
+en:
+  requests:
+    index:
+      title: LIST DAILY REQUEST
+      create_btn: Create
+      request_id: REQUEST ID
+      request_title: REQUEST TYPE
+      request_time:  TIME REQUEST
+      request_time_create: TIME OF CREATION
+      request_action: ACTION
+      request_status: STATUS
+      number: "#"
+      list_empty: List is empty
+    request:
+      show: Show
+      delete: Delete
+      sure: You sure?
+    create:
+      create_request: The request has been generated
+      create_fault: Create an fault request
+    destroy:
+      destroy_fault: Destroy an fault request
+    new:
+      new_request: New Request
+      placeholder: Write content here..
+      submit: Submit
+    destroy:
+      post_destroy: Request deleted
+    content:
+      dialog_title: "Request %{request_type}"
+      dialog_time: "Time %{request_type}"
+      dialog_reason: Reason
+      dialog_status: Status
+    show:
+      not_found: Request not found

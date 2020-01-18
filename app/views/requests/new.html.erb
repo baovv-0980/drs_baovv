@@ -1,0 +1,20 @@
+<div id="form-request" class="container">
+  <%= render "shared/error_messages", object: @request %>
+  <h1 id="title" class="text-center"><%= t ".new_request" %></h1>
+  <%= form_for(@request, url: requests_path) do |f| %>
+    <div class="form-group">
+      <%= f.label :request_type %>
+      <%= f.select :request_type, request_type_select %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :time %>
+      <%= f.datetime_select :time %>
+    </div>
+    <div class="form-group">
+      <%= f.label :reason %>
+      <%= f.text_area :reason, class: "form-control", placeholder: t(".placeholder") %>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <% end %>
+</div>

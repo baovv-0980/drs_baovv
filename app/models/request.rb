@@ -1,6 +1,8 @@
 class Request < ApplicationRecord
-  enum status: {waiting: 0, approval: 1, rejected: 2}
-  enum type: {lated: 0, leaved: 1}
+  PARAMS = %i(request_type time reason).freeze
+
+  enum status: {waiting: 0, approval: 1, rejected: 2, forwarded: 3}
+  enum request_type: {lated: 0, leaved: 1}
 
   belongs_to :user
   has_many :notifications, as: :object

@@ -1,7 +1,7 @@
 class CreateRequests < ActiveRecord::Migration[6.0]
   def change
     create_table :requests do |t|
-      t.integer :type, default: 0
+      t.integer :request_type, default: 0
       t.datetime :time
       t.text :reason
       t.integer :status, default: 0
