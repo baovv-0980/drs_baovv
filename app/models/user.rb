@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   enum role: {member: 0, manager: 1, admin: 2}
 
-  belongs_to :division
+  belongs_to :division, optional: true
   has_many :reports, dependent: :destroy
   has_many :requests, dependent: :destroy
 
@@ -25,6 +25,9 @@ class User < ApplicationRecord
   before_save :downcase_email
 
   has_secure_password
+
+  scope :search_user, ->(search) {where "name LIKE ? OR id LIKE ? OR email LIKE ?","%#{search}%", "%#{search}%", "%#{search}%"}
+  scope :division_empty, -> {where division_id: nil}
 
   private
 

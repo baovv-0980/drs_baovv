@@ -1,0 +1,20 @@
+en:
+  manage_members:
+    index:
+      new_member: Add new member
+      title: LIST MEMBER
+      number: "#"
+      user_id: USER ID
+      division: DIVISION
+      user_name: NAME
+      user_email: EMAIL
+      user_phone: PHONE
+      user_birthday: BIRTHDAY
+      user_skill: SKILL
+      action: ACTION
+      number: "#"
+      submit: Sreach
+      no_find: User not found
+    update:
+      update: Delete users for the division successfully
+      update_fail: Delete users for the division fault
