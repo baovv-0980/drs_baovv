@@ -11,6 +11,7 @@ en:
       request_status: STATUS
       number: "#"
       list_empty: List is empty
+      no_data: NO DATA
     request:
       show: Show
       delete: Delete
@@ -18,6 +19,7 @@ en:
     create:
       create_request: The request has been generated
       create_fault: Create an fault request
+      highest_division: You are at the highest division
     destroy:
       destroy_fault: Destroy an fault request
     new:

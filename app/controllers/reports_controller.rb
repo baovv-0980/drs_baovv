@@ -2,7 +2,6 @@ class ReportsController < ApplicationController
   def index
     @reports = current_user.reports.paginate(page: params[:page],
                                     per_page: Settings.reports.per_page)
-    flash.now[:success] = t ".list_empty" if @reports.blank?
   end
 
   def new
@@ -23,7 +22,7 @@ class ReportsController < ApplicationController
       flash[:success] = t ".create_fault"
       redirect_to reports_path
     else
-      flash.now[:success] = t ".create_report"
+      flash.now[:failure] = t ".create_report"
       render :new
     end
   end

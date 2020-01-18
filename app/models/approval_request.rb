@@ -3,6 +3,7 @@ class ApprovalRequest < ApplicationRecord
 
   belongs_to :division
   belongs_to :request
+  has_many :notifications, as: :object
 
   validates_associated :division, :request
 end

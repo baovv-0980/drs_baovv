@@ -9,6 +9,7 @@ en:
       report_action: ACTION
       number: "#"
       list_empty: List is empty
+      no_data: NO DATA
     report:
       show: Show
     create:

@@ -1,0 +1,25 @@
+en:
+  approve_requests:
+    not_exits: request does not exist
+    index:
+      title: LIST DAILY REQUEST
+      request_id: REQUEST ID
+      request_title: REQUEST TYPE
+      request_time: TIME REQUEST
+      request_action: ACTION
+      request_status: STATUS
+      number: "#"
+      list_empty: List Empty
+      no_data: NO DATA
+    request:
+      show: Show
+    update:
+      update: Update successful
+      update_fault: Update failed
+    content:
+      dialog_user_email: EMAIL
+      dialog_user_name: NAME
+      dialog_time: TIME
+      dialog_reason: REASON
+      approve: APPROVE
+      reject: REJECT
