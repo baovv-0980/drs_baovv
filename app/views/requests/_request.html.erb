@@ -1,0 +1,14 @@
+<tr>
+  <td><%= request_counter += 1 %></td>
+  <td><%= request.id %></td>
+  <td><%= request.request_type %></td>
+  <td><%= l(request.created_at, format: :short) %></td>
+  <td><%= l(request.time, format: :short) %></td>
+  <td><%= request.status %></td>
+  <td>
+    <% if request.waiting? %>
+      <%= link_to t(".delete"), request, method: :delete, data: {confirm: t(".sure")} %>
+    <% end %>
+    <%= link_to t(".show"), request_path(request), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %>
+  </td>
+</tr>

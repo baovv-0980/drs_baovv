@@ -2,7 +2,7 @@
   <h1 class="title text-center"><%= t ".title" %></h1>
   <div id="create-control">
     <div class="create">
-      <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary"%>
+      <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
     </div>
 
     <table class="table table-striped">
@@ -22,3 +22,5 @@
     </table>
   </div>
 </div>
+
+<%= render "shared/dialog" %>

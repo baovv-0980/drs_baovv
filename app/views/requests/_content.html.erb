@@ -1,0 +1,6 @@
+<small><%= t ".dialog_time", request_type: @request.request_type %></small>
+<p><%= l(@request.time, format: :short) %></p>
+<small><%= t ".dialog_status" %></small>
+<p><%= @request.status %></p>
+<small><%= t ".dialog_reason" %></small>
+<p><%= @request.reason %></p>

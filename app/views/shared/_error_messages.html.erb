@@ -1,10 +1,10 @@
-<% if @report.errors.any? %>
+<% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <%= t "error_count", count: @report.errors.size %>
+      <%= t "error_count", count: object.errors.size %>
     </div>
     <ul>
-    <% @report.errors.full_messages.each do |msg| %>
+    <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>

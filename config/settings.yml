@@ -15,5 +15,6 @@ notifications:
   title_max: 255
   title_min: 10
 requests:
+  per_page: 7
   reason_max: 255
   reason_min: 10
