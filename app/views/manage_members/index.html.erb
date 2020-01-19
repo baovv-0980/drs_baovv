@@ -25,6 +25,7 @@
           <th scope="col"><%= t ".action" %></th>
         </tr>
         <tbody>
+          <%= will_paginate @users %>
           <% @users.each_with_index do |user, i| %>
             <%= render partial: "shared/user", locals: {user: user, i: i} %>
           <% end %>

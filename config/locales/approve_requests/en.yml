@@ -9,6 +9,7 @@ en:
       request_action: ACTION
       request_status: STATUS
       number: "#"
+      no_find: There is no request
     request:
       show: Show
     update:

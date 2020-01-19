@@ -3,9 +3,9 @@ class ApproveRequestsController < ApplicationController
   before_action :correct_request, only: [:update,:show]
 
   def index
-    @requests = current_division.approval_requests.paginate(page: params[:page],
-                                    per_page: Settings.requests.per_page)
-    redirect_to root_path if @requests.blank?
+    @search = ApprovalRequestSearch.new(params[:search])
+    @requests = @search.scope(current_division.approval_requests).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    flash.now[:success] = t ".no_find" if @requests.blank?
   end
 
   def show
