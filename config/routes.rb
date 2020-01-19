@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :approve_requests, only: [:index, :show, :update]
   resources :manage_members, only: [:index, :update]
   resources :add_members, only: [:index, :update]
+  resources :admin_manage_users, except: [:show]
 end

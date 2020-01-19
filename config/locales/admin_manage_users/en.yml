@@ -1,0 +1,31 @@
+en:
+  admin_manage_users:
+    not_exits: User not exits
+    user:
+      nil: ------
+      delete_sure: You sure?
+      delete: Delete
+      edit: Edit
+    index:
+      title: LIST MEMBER
+      number: "#"
+      user_id: USER ID
+      division: DIVISION
+      user_name: NAME
+      user_email: EMAIL
+      user_phone: PHONE
+      user_birthday: BIRTHDAY
+      user_skill: SKILL
+      action: ACTION
+      number: "#"
+      submit: Sreach
+      no_find: User not found
+      create_user: Create User
+    create:
+      create_success: Create Success
+    update:
+      update: Update users for the division successfully
+      update_fail: Update users for the division fault
+    destroy:
+      delete: Delete users for the division successfully
+      delete_fail: Delete users for the division fault

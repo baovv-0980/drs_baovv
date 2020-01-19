@@ -39,8 +39,8 @@ class RequestsController < ApplicationController
       flash[:success] = t ".post_destroy"
       redirect_to request.referer || root_path
     else
-      flash.now[:success] = t ".destroy_fault"
-      render :index
+      flash[:success] = t ".destroy_fault"
+      render requests_path
     end
   end
 

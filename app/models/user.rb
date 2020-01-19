@@ -1,30 +1,6 @@
 class User < ApplicationRecord
-
-  def self.search(type,search)
-    if search.blank?
-      all
-    else
-      where(["#{type} LIKE ?","%#{search}%"])
-    end
-  end
-
-  def self.add(type,search)
-    if search.blank?
-      where(division_id: nil)
-    else
-      where(division_id: nil).where("#{type} LIKE ?","%#{search}%")
-    end
-  end
-
-  def self.search(type,search)
-    if search
-      where(["#{type} LIKE ?","%#{search}%"])
-    else
-      all
-    end
-  end
-
   VALID_EMAIL_REGEX = Settings.email
+  PARAMS = %i(name email birthday phone role division_id skill password password_confirmation).freeze
 
   enum role: {member: 0, manager: 1, admin: 2}
 
@@ -46,10 +22,43 @@ class User < ApplicationRecord
                     uniqueness: {case_sensitive: false}
   validates :birthday, presence: true
   validates :phone, presence: true
-
+  validates :skill, presence: true
   before_save :downcase_email
 
   has_secure_password
+
+
+  def self.search(type,search)
+    if search.blank?
+      all
+    else
+      where(["#{type} LIKE ?","%#{search}%"])
+    end
+  end
+
+  def self.add(type,search)
+    if search.blank?
+      where(division_id: nil)
+    else
+      where(division_id: nil).where("#{type} LIKE ?","%#{search}%")
+    end
+  end
+
+  def self.all_user(type,search)
+    if search.blank?
+      all
+    else
+      where("#{type} LIKE ?","%#{search}%")
+    end
+  end
+
+  def self.search(type,search)
+    if search
+      where(["#{type} LIKE ?","%#{search}%"])
+    else
+      all
+    end
+  end
 
   private
 

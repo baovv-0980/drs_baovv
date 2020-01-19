@@ -1,12 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <%= link_to t(".title"), root_path, class: "navbar-brand" %>
   <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <%= link_to t(".reports"), reports_path, class: "nav-link" %>
-    </li>
-    <li class="nav-item">
-      <%= link_to t(".requests"), requests_path, class: "nav-link" %>
-    </li>
+    <% unless current_user.admin? %>
+      <li class="nav-item">
+        <%= link_to t(".reports"), reports_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to t(".requests"), requests_path, class: "nav-link" %>
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <%= link_to "Manage User", admin_manage_users_path, class: "nav-link" %>
+      </li>
+    <% end %>
     <% if current_user.manager? %>
       <li class="nav-item">
         <%= link_to t(".manage_request"), approve_requests_path, class: "nav-link" %>

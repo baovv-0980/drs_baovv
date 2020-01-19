@@ -48,6 +48,6 @@ class ApproveRequestsController < ApplicationController
   def correct_request
     @request = current_division.approval_requests.find_by id: params[:id]
     flash[:success] = t "approve_requests.not_exits"
-    redirect_to root_path if @request.nil?
+    redirect_to root_path if @request.blank?
   end
 end

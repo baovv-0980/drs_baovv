@@ -26,6 +26,6 @@ class AddMembersController < ApplicationController
   def correct_user
     @user = User.find_by id: params[:id]
     flash[:success] = t "member.not_exits"
-    redirect_to root_path if @user.nil?
+    redirect_to root_path if @user.blank?
   end
 end
