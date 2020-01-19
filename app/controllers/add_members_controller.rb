@@ -12,16 +12,14 @@ class AddMembersController < ApplicationController
       redirect_to manage_members_path
     else
       flash[:failure] = t ".update_fault"
-      render :index
+      redirect_to manage_members_path
     end
   end
 
   private
 
   def manager_user
-    return current_user.manager?
-    flash[:empty] = t "manager.not_exits"
-    redirect_to root_path
+    redirect_to root_path unless current_user.admin?
   end
 
   def correct_user

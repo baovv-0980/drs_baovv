@@ -1,0 +1,52 @@
+<%= form_for(@user, url: path) do |f|%>
+  <%= render "shared/error_messages", object: f.object %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :birthday %>
+    <%= f.date_field :birthday, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone %>
+    <%= f.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div id="select" class="form-group">
+    <div>
+    <%= f.label :role %>
+    <%= f.select :role, options_for_select(role_type_select.collect{|u| [t(u[:values]), {class: "custom-select"}, u[:id]]}), {} %>
+    </div>
+    <div>
+      <%= f.label :division_id %>
+      <%= f.select :division_id, options_for_select(division_type_select.collect{|u| [t(u[:values]), {class: "dropdown-menu show"}, u[:id]]}), {} %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :skill %>
+    <%= f.text_area :skill, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
