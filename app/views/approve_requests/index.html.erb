@@ -1,7 +1,13 @@
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
+  <div class="form-group">
+    <%= form_tag approve_requests_path, method: :get do %>
+      <%= date_field_tag :date_form %>
+      <%= date_field_tag :date_to %>
+      <%= submit_tag "search" %>
+    <% end %>
+  </div>
   <div id="create-control">
-    <%= will_paginate @approval_requests %>
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>
@@ -12,7 +18,8 @@
           <th scope="col"><%= t ".request_action" %></th>
         </tr>
         <tbody>
-          <% @approval_requests.each_with_index do |request, i| %>
+          <%= will_paginate @approval_requests %>
+          <%  @approval_requests.each_with_index do |request, i| %>
             <%= render partial: "request", locals: {request: request, i: i} %>
           <% end %>
         </tbody>
