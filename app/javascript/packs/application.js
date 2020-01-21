@@ -7,7 +7,24 @@ require("@rails/activestorage").start()
 require("channels")
 require("jquery")
 
-document.addEventListener("turbolinks:load", () => {
-  $('[data-toggle="tooltip"]').tooltip()
-  $('[data-toggle="popover"]').popover()
-})
+$(document).ready(function()
+{
+    $("#open_notification").click(function()
+    {
+        $("#notificationContainer").fadeToggle(300);
+        $("#notification_count").fadeOut("fast");
+        return false;
+    });
+
+    $(document).click(function()
+    {
+        $("#notificationContainer").hide();
+    });
+
+
+    $("#notificationContainer").click(function()
+    {
+        return false;
+    });
+
+});

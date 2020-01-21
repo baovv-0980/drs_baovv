@@ -4,12 +4,10 @@
     <div class="create">
       <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
     </div>
-
     <% if current_user.manager? && current_user.division.parent_id.present? %>
       <div class="create">
         <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
       </div>
-    <% end %>
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>

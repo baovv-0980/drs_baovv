@@ -1,11 +1,11 @@
 class ReportsController < ApplicationController
   def index
-    @reports = current_user.reports.paginate(page: params[:page],
+    @reports = second_user.reports.paginate(page: params[:page],
                                     per_page: Settings.reports.per_page)
   end
 
   def new
-    @report = current_user.reports.build
+    @report = second_user.reports.build
   end
 
   def show
@@ -31,5 +31,20 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit Report::PARAMS
+  end
+
+  def send_notification report
+    if second_user.member?
+      current_division.users.manager.each do |manager|
+         report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+      end
+    elsif second_user.manager?
+      current_division.parent.users.manager.each do |manager|
+         report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+      end
+    else
+      flash[:success] = t "Ban k the tao bai viet"
+      redirect_to root
+    end
   end
 end

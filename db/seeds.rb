@@ -12,6 +12,7 @@ end
                password_confirmation: password,
                birthday: Time.zone.now,
                phone: "0388967331",
+               skill: "Khong co ki nang chi",
                role: 0,
                division_id: 1,
                skill: "khong co ki nang gi")
