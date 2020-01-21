@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
-  before_action :set_locale
+  before_action :set_locale, :notification
 
   private
 
@@ -11,5 +11,9 @@ class ApplicationController < ActionController::Base
 
   def default_url_options _option = {}
     {locale: I18n.locale}
+  end
+
+  def notification
+    @notifications = current_user.notifications.all.reverse
   end
 end

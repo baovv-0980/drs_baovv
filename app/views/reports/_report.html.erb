@@ -3,5 +3,5 @@
   <td><%= report.id %></td>
   <td><%= report.title %></td>
   <td><%= l(report.created_at, format: :long) %></td>
-  <td><%= link_to t(".show"), report_path(report), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %></td>
+  <td><%= link_to t(".show"), report_path(report, type: "report"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %></td>
 </tr>

@@ -11,7 +11,7 @@ en:
     report:
       show: Show
     create:
-      create_report: The report has been generated
+      create_succes: The report has been generated
       create_fault: Create an fault report
     new:
       new_report: New Report

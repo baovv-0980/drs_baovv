@@ -32,14 +32,13 @@ ActiveRecord::Schema.define(version: 2020_01_13_075721) do
   create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.integer "object_id"
-    t.integer "object_type"
+    t.string "object_type"
     t.integer "sender_id"
     t.integer "receiver_id"
     t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
-    t.index ["sender_id", "receiver_id"], name: "index_notifications_on_sender_id_and_receiver_id", unique: true
     t.index ["sender_id"], name: "index_notifications_on_sender_id"
   end
 

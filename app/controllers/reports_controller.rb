@@ -1,17 +1,24 @@
 class ReportsController < ApplicationController
   def index
-    @reports = current_user.reports.paginate(page: params[:page],
+    @reports = second_user.reports.paginate(page: params[:page],
                                     per_page: Settings.reports.per_page)
     redirect_to root_path if @reports.blank?
   end
 
   def new
-    @report = current_user.reports.build
+    @report = second_user.reports.build
   end
 
   def show
-    @report = current_user.reports.find_by id: params[:id]
-    render :index if @request.blank?
+    if params[:type] == "notifi"
+      @report = Report.find_by id: params[:id]
+    elsif params[:type] == "report"
+      @report = second_user.reports.find_by id: params[:id]
+    else
+      flash[:success] = "Ban da co y pham loi"
+      redirect_to root_path
+    end
+    render :index if @report.blank?
     respond_to do |format|
       format.html
       format.js
@@ -19,12 +26,13 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = current_user.reports.build report_params
-    if @report.save!
-      flash[:success] = t ".create_fault"
+    @report = second_user.reports.build report_params
+    if @report.save
+      send_notification @report
+      flash[:success] = t ".create_success"
       redirect_to reports_path
     else
-      flash.now[:success] = t ".create_report"
+      flash.now[:success] = t ".create_fault"
       render :new
     end
   end
@@ -33,5 +41,20 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit Report::PARAMS
+  end
+
+  def send_notification report
+    if second_user.member?
+      current_division.users.manager.each do |manager|
+         report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+      end
+    elsif second_user.manager?
+      current_division.parent.users.manager.each do |manager|
+         report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+      end
+    else
+      flash[:success] = t "Ban k the tao bai viet"
+      redirect_to root
+    end
   end
 end
