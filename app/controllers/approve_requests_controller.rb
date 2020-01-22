@@ -1,6 +1,6 @@
 class ApproveRequestsController < ApplicationController
   before_action :manager_user
-  before_action :correct_request, only: [:update,:show]
+  before_action :correct_request, only: [:update, :show]
 
   def index
     @search = ApprovalRequestSearch.new(params[:search])
@@ -16,28 +16,54 @@ class ApproveRequestsController < ApplicationController
   end
 
   def update
-    if @request.update!(status: params[:status])
+    if @request.update(status: params[:status])
       create_parent_request if params[:status] == Settings.enum.approval
       rejected_request if params[:status] == Settings.enum.rejected
-      flash[:success] = t ".update"
-      redirect_to request.referer || root_path
     else
-      flash[:success] = t ".update_fault"
-      render :index
+      flash_success
     end
   end
 
   private
 
   def rejected_request
-    @request.request.update!(status: Settings.enum.rejected)
+    ActiveRecord::Base.transaction do
+      @request.request.notifications.create!(title: "You request rejected", sender_id: current_user.id, receiver_id: @request.request.user_id, status: "rejected")
+      @request.request.update!(status: Settings.enum.rejected)
+      flash_success
+    rescue StandardError
+      flash_fault
+    end
   end
 
   def create_parent_request
     if current_division.parent_id.blank?
-      @request.request.update!(status: Settings.enum.approval)
+      ActiveRecord::Base.transaction do
+        @request.request.update!(status: Settings.enum.approval)
+        send_notifi_user @request
+        flash_success
+      rescue StandardError
+        flash_fault
+      end
     else
-      current_division.parent.approval_requests.create!(request_id: @request.request_id)
+      ActiveRecord::Base.transaction do
+        current_division.parent.approval_requests.create!(request_id: @request.request_id)
+        send_notifi_manager @request
+        send_notifi_user @request
+        flash_success
+      rescue StandardError
+        flash_fault
+      end
+    end
+  end
+
+  def send_notifi_user user_request
+    user_request.request.notifications.create!(title: "You request approved", sender_id: current_user.id, receiver_id: user_request.request.user_id, status: "approval")
+  end
+
+  def send_notifi_manager user_request
+    current_division.parent.users.manager.each do |manager|
+      user_request.request.notifications.create(title: "You has new request", sender_id: current_user.id,receiver_id: manager.id)
     end
   end
 
@@ -47,7 +73,17 @@ class ApproveRequestsController < ApplicationController
 
   def correct_request
     @request = current_division.approval_requests.find_by id: params[:id]
-    flash[:success] = t "approve_requests.not_exits"
+    # flash[:success] = t "approve_requests.not_exits"
     redirect_to root_path if @request.blank?
+  end
+
+  def flash_success
+    flash[:success] = "Cap nhat xu ly yeu cau request thanh cong"
+    redirect_to approve_requests_path
+  end
+
+  def flash_fault
+    flash[:success] = "Cap nhat xu ly yeu cau request that bai"
+    redirect_to errors_path
   end
 end

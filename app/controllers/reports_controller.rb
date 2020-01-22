@@ -46,11 +46,16 @@ class ReportsController < ApplicationController
   def send_notification report
     if second_user.member?
       current_division.users.manager.each do |manager|
-         report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+        report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
       end
     elsif second_user.manager?
-      current_division.parent.users.manager.each do |manager|
+      if current_division.parent.blank?
+        flash[:success] = t "Ban dang o vi tri cao nhat"
+        redirect_to root
+      else
+        current_division.parent.users.manager.each do |manager|
          report.notifications.create(title: "You has new report", sender_id: second_user.id,receiver_id: manager.id)
+        end
       end
     else
       flash[:success] = t "Ban k the tao bai viet"

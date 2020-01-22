@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   resources :add_members, only: [:index, :update]
   resources :admin_manage_users, except: [:show]
   resources :notifications
+  resources :errors, only: [:index]
   mount ActionCable.server => "/cable"
 end

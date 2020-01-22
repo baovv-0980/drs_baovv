@@ -11,10 +11,12 @@ consumer.subscriptions.create("NotificationsChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log(data.object)
+    console.log(data.layout)
+    console.log(data.user_id)
+    console.log(data.user_receiver)
     $('#notificationList').append(data.layout)
-    $('#open_notification').html(data.counter)
-    if (Notification.permission === 'granted') {
+    $('#notification-counter').html(data.counter)
+    if (Notification.permission === 'granted' && data.user_receiver == data.user_id) {
       var title = data.object.title +""
       var body = "Notification form " + data.name
       var options = { body: body }

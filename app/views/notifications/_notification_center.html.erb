@@ -1,4 +1,9 @@
-<%= render 'notifications/counter', counter: notifications.count %>
+<button type="button" class="btn btn-light dropdown-toggle" href="#" data-toggle="dropdown" id="dropdownMenuButton" >
+  Notifications <span id="notification-counter" class="badge badge-primary">
+   <%= render "notifications/counter", counter: notifications.count %>
+</span>
+</button>
+
 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
   <%= render notifications %>
 </ul>
