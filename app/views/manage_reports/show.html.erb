@@ -1,11 +1,13 @@
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
-  <div id="create-control">
-    <% unless current_division.parent_id.blank? %>
-      <div class="create">
-        <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
-      </div>
+  <div class="form-group">
+    <%= form_tag manage_report_path, method: :get do %>
+      <%= text_field_tag "search[date_form]", @search.date_form %>
+      <%= text_field_tag "search[date_to]", @search.date_to %>
+      <%= submit_tag "search" %>
     <% end %>
+  </div>
+  <div id="create-control">
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>

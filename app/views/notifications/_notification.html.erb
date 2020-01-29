@@ -2,5 +2,8 @@
   <% if notification.object_type == "Report" %>
     <%= link_to notification.title, report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
     <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
+  <% elsif notification.object_type == "Request" %>
+    <%= link_to notification.title, request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
+    <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
   <% end %>
 </li>

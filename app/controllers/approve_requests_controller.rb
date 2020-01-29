@@ -5,7 +5,7 @@ class ApproveRequestsController < ApplicationController
   def index
     @search = ApprovalRequestSearch.new(params[:search])
     @requests = @search.scope(current_division.approval_requests).paginate(page: params[:page], per_page: Settings.requests.per_page)
-    flash.now[:success] = t ".no_find" if @requests.blank?
+    flash.now[:success] = t ".no_found" if @requests.blank?
   end
 
   def show
@@ -28,7 +28,7 @@ class ApproveRequestsController < ApplicationController
 
   def rejected_request
     ActiveRecord::Base.transaction do
-      @request.request.notifications.create!(title: "You request rejected", sender_id: current_user.id, receiver_id: @request.request.user_id, status: "rejected")
+      @request.request.notifications.create!(title: t(".reject_title") , sender_id: current_user.id, receiver_id: @request.request.user_id, status: Settings.enum.rejected)
       @request.request.update!(status: Settings.enum.rejected)
       flash_success
     rescue StandardError
@@ -58,12 +58,12 @@ class ApproveRequestsController < ApplicationController
   end
 
   def send_notifi_user user_request
-    user_request.request.notifications.create!(title: "You request approved", sender_id: current_user.id, receiver_id: user_request.request.user_id, status: "approval")
+    user_request.request.notifications.create!(title: t(".approve_title"), sender_id: current_user.id, receiver_id: user_request.request.user_id, status: Settings.enum.approval)
   end
 
   def send_notifi_manager user_request
     current_division.parent.users.manager.each do |manager|
-      user_request.request.notifications.create(title: "You has new request", sender_id: current_user.id,receiver_id: manager.id)
+      user_request.request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
     end
   end
 
@@ -78,12 +78,12 @@ class ApproveRequestsController < ApplicationController
   end
 
   def flash_success
-    flash[:success] = "Cap nhat xu ly yeu cau request thanh cong"
+    flash[:success] = t ".update_success"
     redirect_to approve_requests_path
   end
 
   def flash_fault
-    flash[:success] = "Cap nhat xu ly yeu cau request that bai"
+    flash[:success] = t ".update_fault"
     redirect_to errors_path
   end
 end

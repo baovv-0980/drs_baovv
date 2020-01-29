@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   resources :admin_manage_users, except: [:show]
   resources :notifications
   resources :errors, only: [:index]
+  resources :manage_divisions
+  resources :manage_reports
   mount ActionCable.server => "/cable"
 end
