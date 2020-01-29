@@ -1,0 +1,13 @@
+en:
+  manage_divisions:
+    index:
+      no_found: No found Division
+    create:
+      create_success: Create division success
+    update:
+      update_success: Update success
+      update_fault: Update Fault
+    destroy:
+      destroy_success: Destroy success
+      destroy_fault: Destrou fault
+

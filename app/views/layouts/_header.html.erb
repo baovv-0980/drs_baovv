@@ -2,15 +2,20 @@
   <%= link_to t(".title"), root_path, class: "navbar-brand" %>
   <ul class="navbar-nav mr-auto">
     <% unless current_user.admin? %>
-      <li class="nav-item">
-        <%= link_to t(".reports"), reports_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to t(".requests"), requests_path, class: "nav-link" %>
-      </li>
+      <% unless current_user.division.parent_id.blank? %>
+        <li class="nav-item">
+          <%= link_to t(".reports"), reports_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to t(".requests"), requests_path, class: "nav-link" %>
+        </li>
+      <% end %>
     <% else %>
       <li class="nav-item">
         <%= link_to "Manage User", admin_manage_users_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Manage Division", manage_divisions_path, class: "nav-link" %>
       </li>
     <% end %>
     <% if current_user.manager? %>

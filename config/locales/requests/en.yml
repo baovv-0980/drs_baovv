@@ -10,11 +10,15 @@ en:
       request_action: ACTION
       request_status: STATUS
       number: "#"
+    show:
+      error: Error while trying to find a request that doesn't exist
+      not_found: No request found
     request:
       show: Show
       delete: Delete
       sure: You sure?
     create:
+      title: You has new request
       create_request: The request has been generated
       create_fault: Create an fault request
       highest_division: You are at the highest division

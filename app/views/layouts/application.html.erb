@@ -15,7 +15,7 @@
       <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
     <%= render "layouts/header" %>
-
     <%= yield %>
+    <%= render "shared/dialog" %>
   </body>
 </html>

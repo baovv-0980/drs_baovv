@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 class="title text-center"><%= t ".title" %></h1>
+  <div class="create">
+    <%= link_to "Create Division", new_manage_division_path, class: "btn btn-primary" %>
+  </div>
+  <div id="create-control">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col"><%= t ".number" %></th>
+          <th scope="col"><%= "DIVISION_ID" %></th>
+          <th scope="col"><%= "DIVISION NAME" %></th>
+          <th scope="col"><%= "DIVISION PARENT" %></th>
+          <th scope="col"><%= "DIVISION PARENT PATH" %></th>
+          <th scope="col"><%= t ".action" %></th>
+        </tr>
+        <tbody>
+          <%= will_paginate @divisions %>
+          <% @divisions.each_with_index do |division, i| %>
+            <%= render partial: "division", locals: {division: division, i: i} %>
+          <% end %>
+        </tbody>
+      </thead>
+    </table>
+  </div>
+</div>

@@ -1,8 +1,7 @@
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
   <div id="create-control">
-
-    <% unless current_user.division.parent_id.nil? %>
+    <% unless current_user.division.parent_id.blank? %>
       <div class="create">
         <%= link_to t(".create_btn"), new_request_path, class: "btn btn-primary" %>
       </div>
@@ -26,5 +25,3 @@
     </table>
   </div>
 </div>
-
-<%= render "shared/dialog" %>

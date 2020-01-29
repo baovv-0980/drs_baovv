@@ -2,7 +2,7 @@ en:
   reports:
     index:
       title: LIST DAILY REPORTS
-      create_btn: Create
+      create_btn: Create a new report
       report_id: REPORT ID
       report_title: TITLE
       report_time:  TIME REQUEST
@@ -10,8 +10,13 @@ en:
       number: "#"
     report:
       show: Show
+    show:
+      error: Error while trying to find a report that doesn't exist
+      not_found: No report found
     create:
-      create_succes: The report has been generated
+      notifi_title: You has new report
+      highest_division: You are at the highest division
+      create_success: The report has been generated
       create_fault: Create an fault report
     new:
       new_report: New Report

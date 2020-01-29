@@ -1,9 +1,6 @@
 module SessionsHelper
   def current_user
-    @current_user = User.first
-  end
-  def second_user
-    @current_user = User.second
+    @current_user = User.find(3)
   end
 
   def current_division

@@ -7,8 +7,15 @@ class RequestsController < ApplicationController
   end
 
   def show
-    @request = current_user.requests.find_by id: params[:id]
-    flash.now[:success] = t ".create_fault"
+    if params[:type] == "notifi"
+      @request = Request.find_by id: params[:id]
+    elsif
+      @request = current_user.requests.find_by(id: params[:id])
+    else
+      flash[:success] = t ".error"
+      redirect_to errors_path
+    end
+    flash.now[:success] = t ".not_found"
     render :index if @request.blank?
     respond_to do |format|
       format.html
@@ -32,8 +39,8 @@ class RequestsController < ApplicationController
     elsif current_user.member?
       save_approval_request current_division
     else
-      flash[:success] = t "Ban k the tao bai viet"
-      redirect_to errors_path
+      flash.now[:success] = t ".create_fault"
+      render :new
     end
   end
 
@@ -64,13 +71,13 @@ class RequestsController < ApplicationController
       @request.save
       @request.approval_requests.create! division_id: division.id
       division.users.manager.each do |manager|
-        @request.notifications.create(title: "You has new request", sender_id: current_user.id,receiver_id: manager.id)
+        @request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
       end
       flash[:success] = t ".create_request"
       redirect_to requests_path
     rescue StandardError
       flash.now[:success] = t ".create_fault"
-      redirect_to errors_path
+      render :new
     end
   end
 end

@@ -9,11 +9,14 @@ en:
       request_action: ACTION
       request_status: STATUS
       number: "#"
-      no_find: There is no request
+      no_found: There is no request
     request:
       show: Show
     update:
-      update: Update successful
+      title: You has new request
+      approve_title: You request approved
+      reject_title: You request rejected
+      update_success: Update successful
       update_fault: Update failed
     content:
       dialog_user_email: EMAIL

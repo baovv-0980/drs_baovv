@@ -23,6 +23,7 @@ class User < ApplicationRecord
   validates :birthday, presence: true
   validates :phone, presence: true
   validates :skill, presence: true
+  validates :skill, presence: true
   before_save :downcase_email
 
   has_secure_password

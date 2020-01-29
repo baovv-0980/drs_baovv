@@ -1,0 +1,6 @@
+<div id="form-request" class="container">
+  <%= render "shared/error_messages", object: @division %>
+
+  <h1 id="title" class="text-center"><%= t ".new_report" %></h1>
+  <%= render partial: "form", locals: {division: @division, path: manage_divisions_path} %>
+</div>

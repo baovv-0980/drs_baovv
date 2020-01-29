@@ -23,11 +23,11 @@
   <div id="select" class="form-group">
     <div>
     <%= f.label :role %>
-    <%= f.select :role, options_for_select(role_type_select.collect{|u| [t(u[:values]), {class: "custom-select"}, u[:id]]}), {} %>
+    <%= f.select :role, role_type_select %>
     </div>
     <div>
       <%= f.label :division_id %>
-      <%= f.select :division_id, options_for_select(division_type_select.collect{|u| [t(u[:values]), {class: "dropdown-menu show"}, u[:id]]}), {} %>
+      <%= f.select :division_id, division_type_select.collect {|i| [i.name, i.id]}, { include_blank: "NULL" } %>
     </div>
   </div>
 

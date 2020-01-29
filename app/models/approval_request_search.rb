@@ -7,8 +7,8 @@ class ApprovalRequestSearch
     @date_to = parsed_date(params[:date_to], Date.today.tomorrow.to_s)
   end
 
-  def scope(request)
-    request.where("created_at BETWEEN ? AND ?", @date_form, @date_to)
+  def scope(request_type)
+    request_type.where("created_at BETWEEN ? AND ?", @date_form, @date_to)
   end
 
   private
