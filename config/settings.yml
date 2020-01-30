@@ -1,11 +1,14 @@
 mailer: from@example.com
 notifi: "notifi"
 enum:
+  approval_request: ApprovalRequest
   approval: approval
   rejected: rejected
   name: name
   email: email
   id: id
+  report: Report
+  request: Request
 users:
   email: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i'
   name_max: 50

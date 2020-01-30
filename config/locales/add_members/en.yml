@@ -1,6 +1,7 @@
 en:
   add_members:
     index:
+      begin_title: Add Member
       title: LIST MEMBER
       number: "#"
       user_id: USER ID

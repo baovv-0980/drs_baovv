@@ -1,6 +1,6 @@
 class NotificationsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "notification_channel"
+    stream_from "room#{current_user.id}"
   end
 
   def unsubscribed

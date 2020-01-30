@@ -7,6 +7,7 @@ en:
       delete: Delete
       edit: Edit
     index:
+      begin_title: Manage User
       title: LIST MEMBER
       number: "#"
       user_id: USER ID
@@ -29,3 +30,5 @@ en:
     destroy:
       delete: Delete users for the division successfully
       delete_fail: Delete users for the division fault
+    new:
+      title_begin: Add User

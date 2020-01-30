@@ -1,0 +1,6 @@
+en:
+  sessions:
+    new:
+      submit: Submit
+    create:
+      flash_login: Login fail

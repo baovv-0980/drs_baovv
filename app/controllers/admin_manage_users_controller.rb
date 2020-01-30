@@ -1,6 +1,8 @@
 class AdminManageUsersController < ApplicationController
   before_action :correct_user, only: [:destroy, :update]
   before_action :admin_user
+  before_action :logged_in_user
+
   def index
     @users = User.all_user(params[:t],params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
     flash.now[:success] = t ".no_find" if @users.blank?

@@ -1,6 +1,7 @@
 class ApproveRequestsController < ApplicationController
   before_action :manager_user
   before_action :correct_request, only: [:update, :show]
+  before_action :logged_in_user
 
   def index
     @search = ApprovalRequestSearch.new(params[:search])
@@ -28,10 +29,10 @@ class ApproveRequestsController < ApplicationController
 
   def rejected_request
     ActiveRecord::Base.transaction do
-      @request.request.notifications.create!(title: t(".reject_title") , sender_id: current_user.id, receiver_id: @request.request.user_id, status: Settings.enum.rejected)
+      @request.notifications.create!(title: t(".reject_title") , sender_id: current_user.id, receiver_id: @request.request.user_id, status: Settings.enum.rejected)
       @request.request.update!(status: Settings.enum.rejected)
       flash_success
-    rescue StandardError
+    rescue ActiveRecord::RecordInvalid
       flash_fault
     end
   end
@@ -42,7 +43,7 @@ class ApproveRequestsController < ApplicationController
         @request.request.update!(status: Settings.enum.approval)
         send_notifi_user @request
         flash_success
-      rescue StandardError
+      rescue ActiveRecord::RecordInvalid
         flash_fault
       end
     else
@@ -51,19 +52,19 @@ class ApproveRequestsController < ApplicationController
         send_notifi_manager @request
         send_notifi_user @request
         flash_success
-      rescue StandardError
+      rescue ActiveRecord::RecordInvalid
         flash_fault
       end
     end
   end
 
   def send_notifi_user user_request
-    user_request.request.notifications.create!(title: t(".approve_title"), sender_id: current_user.id, receiver_id: user_request.request.user_id, status: Settings.enum.approval)
+    user_request.notifications.create!(title: t(".approve_title"), sender_id: current_user.id, receiver_id: user_request.request.user_id, status: Settings.enum.approval)
   end
 
   def send_notifi_manager user_request
     current_division.parent.users.manager.each do |manager|
-      user_request.request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
+      user_request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
     end
   end
 

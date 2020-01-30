@@ -1,3 +1,4 @@
+<% provide(:title, t(".begin_title")) %>
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
   <div class="create">
@@ -8,10 +9,10 @@
       <thead class="table-dark">
         <tr>
           <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= "DIVISION_ID" %></th>
-          <th scope="col"><%= "DIVISION NAME" %></th>
-          <th scope="col"><%= "DIVISION PARENT" %></th>
-          <th scope="col"><%= "DIVISION PARENT PATH" %></th>
+          <th scope="col"><%= t ".division_id" %></th>
+          <th scope="col"><%= t ".division_name" %></th>
+          <th scope="col"><%= t ".division_parent" %></th>
+          <th scope="col"><%= t ".division_parent_path" %></th>
           <th scope="col"><%= t ".action" %></th>
         </tr>
         <tbody>

@@ -9,6 +9,6 @@
     <% if request.waiting? %>
       <%= link_to t(".delete"), request, method: :delete, data: {confirm: t(".sure")} %>
     <% end %>
-    <%= link_to t(".show"), request_path(request), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %>
+    <%= link_to t(".show"), request_path(request, type: "request"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %>
   </td>
 </tr>

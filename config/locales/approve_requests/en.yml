@@ -2,7 +2,8 @@ en:
   approve_requests:
     not_exits: request does not exist
     index:
-      title: LIST DAILY REQUEST
+      begin_title: Manage Request
+      title: LIST REQUEST
       request_id: REQUEST ID
       request_title: REQUEST TYPE
       request_time: TIME REQUEST

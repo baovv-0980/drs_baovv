@@ -1,7 +1,8 @@
+<% provide(:title, t(".begin_title")) %>
 <div class="container">
   <h1 class="title text-center"><%= t ".title" %></h1>
   <div id="create-control">
-    <% unless current_division.parent_id.blank? %>
+    <% unless current_division.parent_id.blank? && current_user.manager? %>
       <div class="create">
         <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
       </div>

@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_action :correct_request, only: :destroy
+  before_action :logged_in_user
 
   def index
     @requests = current_user.requests.paginate(page: params[:page],
@@ -9,7 +10,7 @@ class RequestsController < ApplicationController
   def show
     if params[:type] == "notifi"
       @request = Request.find_by id: params[:id]
-    elsif
+    elsif params[:type] == "request"
       @request = current_user.requests.find_by(id: params[:id])
     else
       flash[:success] = t ".error"
@@ -67,15 +68,16 @@ class RequestsController < ApplicationController
   end
 
   def save_approval_request division
-    Request.transaction do
-      @request.save
+
+    ActiveRecord::Base.transaction do
+      @request.save!
       @request.approval_requests.create! division_id: division.id
       division.users.manager.each do |manager|
-        @request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
+        @request.notifications.create!(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
       end
       flash[:success] = t ".create_request"
       redirect_to requests_path
-    rescue StandardError
+    rescue ActiveRecord::RecordInvalid
       flash.now[:success] = t ".create_fault"
       render :new
     end

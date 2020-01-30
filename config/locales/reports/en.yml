@@ -1,6 +1,8 @@
 en:
   reports:
     index:
+      no_found: No found Report
+      begin_title: Report
       title: LIST DAILY REPORTS
       create_btn: Create a new report
       report_id: REPORT ID

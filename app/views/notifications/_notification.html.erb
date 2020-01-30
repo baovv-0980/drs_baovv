@@ -1,8 +1,11 @@
 <li class="dropdown-item">
-  <% if notification.object_type == "Report" %>
+  <% if notification.object_type == Settings.enum.report %>
     <%= link_to notification.title, report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
     <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
-  <% elsif notification.object_type == "Request" %>
+  <% elsif notification.object_type == Settings.enum.request %>
+    <%= link_to notification.title, approve_request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
+    <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
+  <% elsif notification.object_type == Settings.enum.approval_request %>
     <%= link_to notification.title, request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
     <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
   <% end %>

@@ -1,5 +1,7 @@
 en:
-  title: InitProject
+  title: Daily Reports
+  login_user: Please login
+  nil: ----
   activerecord:
     errors:
       messages:
@@ -13,6 +15,7 @@ en:
       requests: Requests
       manage_request: Manage Request
       manage_division: Manage Division
+      manage_member: Manage Member
       notifi: Notifications
       notifi_item1: Notifications 1
       notifi_item2: Notifications 2
