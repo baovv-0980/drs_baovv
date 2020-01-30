@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_action :correct_request, only: :destroy
+  before_action :logged_in_user
 
   def index
     @requests = current_user.requests.paginate(page: params[:page],
@@ -39,8 +40,8 @@ class RequestsController < ApplicationController
     elsif current_user.member?
       save_approval_request current_division
     else
-      flash[:success] = t ".create_fault"
-      redirect_to errors_path
+      flash.now[:success] = t ".create_fault"
+      render :new
     end
   end
 
@@ -77,7 +78,7 @@ class RequestsController < ApplicationController
       redirect_to requests_path
     rescue StandardError
       flash.now[:success] = t ".create_fault"
-      redirect_to errors_path
+      render :new
     end
   end
 end

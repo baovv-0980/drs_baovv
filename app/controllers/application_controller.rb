@@ -14,6 +14,14 @@ class ApplicationController < ActionController::Base
   end
 
   def notification
-    @notifications = current_user.notifications.all.reverse
+    @notifications = current_user.notifications.all.reverse unless current_user.blank?
+  end
+
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = t "login_user"
+      redirect_to login_path
+    end
   end
 end

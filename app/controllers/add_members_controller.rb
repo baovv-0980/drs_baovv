@@ -1,7 +1,7 @@
 class AddMembersController < ApplicationController
   before_action :manager_user
   before_action :correct_user, only: [:update]
-
+  before_action :logged_in_user
   def index
     @users = User.add(params[:t],params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
     flash.now[:success] = t ".no_find" if @users.blank?

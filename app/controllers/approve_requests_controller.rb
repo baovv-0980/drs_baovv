@@ -1,6 +1,7 @@
 class ApproveRequestsController < ApplicationController
   before_action :manager_user
   before_action :correct_request, only: [:update, :show]
+  before_action :logged_in_user
 
   def index
     @search = ApprovalRequestSearch.new(params[:search])

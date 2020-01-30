@@ -1,0 +1,26 @@
+<div id="login" class="container">
+  <h1 class="center"><%= t ".title_begin"%></h1>
+  <%= form_for(:session, url: login_path) do |f| %>
+
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+
+    <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.check_box :remember_me %>
+      <span><%= t ".remember" %></span>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Login", class: "btn btn-primary" %>
+    </div>
+
+
+  <% end %>
+</div>

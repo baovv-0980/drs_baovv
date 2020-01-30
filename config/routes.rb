@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root "static_pages#index"
 
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
   resources :reports, except: [:edit, :update, :destroy]
   resources :requests, except: [:edit]
   resources :approve_requests, only: [:index, :show, :update]

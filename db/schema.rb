@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_075721) do
+ActiveRecord::Schema.define(version: 2020_01_30_022332) do
 
   create_table "approval_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 0
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_075721) do
     t.bigint "division_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "remember_digest"
     t.index ["division_id"], name: "index_users_on_division_id"
   end
 

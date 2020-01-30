@@ -35,7 +35,7 @@
       <%= link_to t(".settings"), "#", class: "nav-link dropdown-toggle", "data-toggle": "dropdown" %>
       <div class="dropdown-menu">
         <%= link_to t(".profile"), "#", class: "dropdown-item" %>
-        <%= link_to t(".logout"), "#", class: "dropdown-item" %>
+        <%= link_to t(".logout"), logout_path, method: :delete, class: "dropdown-item" %>
       </div>
     </li>
   </ul>

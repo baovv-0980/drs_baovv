@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  before_action :logged_in_user
+
   def index
     @reports = current_user.reports.paginate(page: params[:page],
                                     per_page: Settings.reports.per_page)
