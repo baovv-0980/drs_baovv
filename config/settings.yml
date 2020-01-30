@@ -6,6 +6,8 @@ enum:
   name: name
   email: email
   id: id
+  report: Report
+  request: Request
 users:
   email: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i'
   name_max: 50

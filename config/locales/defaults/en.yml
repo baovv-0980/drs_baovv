@@ -1,5 +1,7 @@
 en:
   title: InitProject
+  login_user: Please login
+  nil: ----
   activerecord:
     errors:
       messages:

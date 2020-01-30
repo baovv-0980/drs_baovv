@@ -6,7 +6,7 @@ class Request < ApplicationRecord
 
   belongs_to :user
   has_many :notifications, as: :object
-  has_many :approval_requests
+  has_many :approval_requests, dependent: :destroy
 
   validates :time, presence: true
   validates :reason, presence: true,

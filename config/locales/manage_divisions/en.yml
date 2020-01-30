@@ -1,6 +1,12 @@
 en:
   manage_divisions:
     index:
+      number: "#"
+      division_id: DIVISION_ID
+      division_name: DIVISION NAME
+      division_parent: DIVISION PARENT
+      division_parent_path: DIVISION PARENT PATH
+      action: ACTION
       no_found: No found Division
     create:
       create_success: Create division success
@@ -10,4 +16,9 @@ en:
     destroy:
       destroy_success: Destroy success
       destroy_fault: Destrou fault
+    division:
+      show: Show
+      edit: Edit
+      delete: Delete
+      delete_sure: Your Sure?
 

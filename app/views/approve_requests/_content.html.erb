@@ -9,7 +9,7 @@
 <% if @request.waiting? %>
   <div class="center">
     <%= link_to t(".approve"), approve_request_path(@request, status: "approval"), method: :patch, class: "btn btn-primary" %>
-    <%= link_to t(".reject"), approve_request_path(@request, status: "rejected"), method: :patch, class: "btn btn-danger"%>
+    <%= link_to t(".reject"), approve_request_path(@request, status: "rejected"), method: :patch, class: "btn btn-danger" %>
   </div>
 <% end %>
 

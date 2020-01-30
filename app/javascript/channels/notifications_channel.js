@@ -14,9 +14,9 @@ consumer.subscriptions.create("NotificationsChannel", {
     console.log(data.layout)
     console.log(data.user_id)
     console.log(data.user_receiver)
-    $('#notificationList').append(data.layout)
-    $('#notification-counter').html(data.counter)
     if (Notification.permission === 'granted' && data.user_receiver == data.user_id) {
+      $("#notification-list").prepend(data.layout)
+      $("#notification-counter").html(data.counter)
       var title = data.object.title +""
       var body = "Notification form " + data.name
       var options = { body: body }

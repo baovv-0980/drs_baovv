@@ -14,6 +14,7 @@ en:
       number: "#"
       submit: Sreach
       no_find: User not found
+      create_btn: Create a new member
     update:
       update: Delete users for the division successfully
       update_fail: Delete users for the division fault

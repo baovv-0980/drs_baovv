@@ -2,14 +2,18 @@
   <td><%= i+1 %></td>
   <td><%= division.id %></td>
   <td><%= division.name %></td>
-  <td><%= division.parent_id %></td>
+  <% unless division.parent_id.blank? %>
+    <td><%= division.parent_id %></td>
+  <% else %>
+     <td><%= t "nil" %></td>
+  <% end %>
   <% unless division.parent_path.blank? %>
     <td><%= division.parent_path %></td>
   <% else %>
-    <td>------</td>
+    <td><%= t "nil" %></td>
   <% end %>
   <td>
-    <%= link_to "Show", manage_division_path(division), method: :get %>
+    <%= link_to t(".show"), manage_division_path(division), method: :get %>
     <%= link_to t(".edit"), edit_manage_division_path(division), method: :get %>
     <%= link_to t(".delete"), manage_division_path(division), method: :delete, data: {confirm: t(".delete_sure")} %>
   </td>

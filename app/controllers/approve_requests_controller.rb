@@ -1,6 +1,7 @@
 class ApproveRequestsController < ApplicationController
   before_action :manager_user
   before_action :correct_request, only: [:update, :show]
+  before_action :logged_in_user
 
   def index
     @search = ApprovalRequestSearch.new(params[:search])
@@ -31,7 +32,7 @@ class ApproveRequestsController < ApplicationController
       @request.request.notifications.create!(title: t(".reject_title") , sender_id: current_user.id, receiver_id: @request.request.user_id, status: Settings.enum.rejected)
       @request.request.update!(status: Settings.enum.rejected)
       flash_success
-    rescue StandardError
+    rescue ActiveRecord::RecordInvalid
       flash_fault
     end
   end
@@ -42,7 +43,7 @@ class ApproveRequestsController < ApplicationController
         @request.request.update!(status: Settings.enum.approval)
         send_notifi_user @request
         flash_success
-      rescue StandardError
+      rescue ActiveRecord::RecordInvalid
         flash_fault
       end
     else
@@ -51,7 +52,7 @@ class ApproveRequestsController < ApplicationController
         send_notifi_manager @request
         send_notifi_user @request
         flash_success
-      rescue StandardError
+      rescue ActiveRecord::RecordInvalid
         flash_fault
       end
     end
