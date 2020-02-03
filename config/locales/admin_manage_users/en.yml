@@ -22,6 +22,8 @@ en:
       submit: Sreach
       no_find: User not found
       create_user: Create User
+    edit:
+      title_begin: Edit User
     create:
       create_success: Create Success
     update:

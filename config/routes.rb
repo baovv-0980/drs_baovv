@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   resources :errors, only: [:index]
   resources :manage_divisions
   resources :manage_reports, only: [:show]
+  resources :profiles, only: [:edit, :update]
   mount ActionCable.server => "/cable"
 end

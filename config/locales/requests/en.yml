@@ -2,7 +2,7 @@ en:
   requests:
     index:
       begin_title: Request
-      title: LIST DAILY REQUEST
+      title: LIST REQUEST
       create_btn: Create a new request
       request_id: REQUEST ID
       request_title: REQUEST TYPE

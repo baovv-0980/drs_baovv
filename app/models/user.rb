@@ -2,6 +2,8 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = Settings.email
   PARAMS = %i(name email birthday phone role division_id skill password password_confirmation).freeze
 
+  PARAMS_PROFILE = %i(name birthday phone skill password password_confirmation).freeze
+
   attr_accessor :remember_token
 
   enum role: {member: 0, manager: 1, admin: 2}
@@ -24,7 +26,6 @@ class User < ApplicationRecord
                     uniqueness: {case_sensitive: false}
   validates :birthday, presence: true
   validates :phone, presence: true
-  validates :skill, presence: true
   validates :skill, presence: true
   before_save :downcase_email
 

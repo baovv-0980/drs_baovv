@@ -1,0 +1,7 @@
+en:
+  profiles:
+    update:
+      update_success: Update Profile success
+      update_fault: Update Profile fault
+    edit:
+      title_begin: Profile

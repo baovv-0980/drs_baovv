@@ -51,11 +51,16 @@ class ApproveRequestsController < ApplicationController
         current_division.parent.approval_requests.create!(request_id: @request.request_id)
         send_notifi_manager @request
         send_notifi_user @request
+        forwarded_request_user @request
         flash_success
       rescue ActiveRecord::RecordInvalid
         flash_fault
       end
     end
+  end
+
+  def forwarded_request_user user_request
+    @request.request.update!(status: Settings.enum.forwarded)
   end
 
   def send_notifi_user user_request
@@ -64,7 +69,7 @@ class ApproveRequestsController < ApplicationController
 
   def send_notifi_manager user_request
     current_division.parent.users.manager.each do |manager|
-      user_request.notifications.create(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
+      user_request.request.notifications.create!(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
     end
   end
 

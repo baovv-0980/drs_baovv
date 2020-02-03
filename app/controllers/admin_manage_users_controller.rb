@@ -30,7 +30,7 @@ class AdminManageUsersController < ApplicationController
   end
 
   def update
-    if @user.update!(user_params)
+    if @user.update(user_params)
       flash[:success] = t ".update"
       redirect_to admin_manage_users_path
     else
