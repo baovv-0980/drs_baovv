@@ -8,12 +8,9 @@ en:
       report_time:  TIME REQUEST
       report_action: ACTION
       number: "#"
+      list_empty: List is empty
     report:
       show: Show
-      dialog_plan: Plan
-      dialog_actual: Actual
-      dialog_next_plan: Next Plan
-      dialog_issual: Issual
     create:
       create_report: The report has been generated
       create_fault: Create an fault report
@@ -21,3 +18,10 @@ en:
       new_report: New Report
       placeholder: Write content here..
       submit: Submit
+    content:
+      dialog_plan: Plan
+      dialog_actual: Actual
+      dialog_next_plan: Next Plan
+      dialog_issual: Issual
+    show:
+      not_found: Report not found

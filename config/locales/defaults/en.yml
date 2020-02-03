@@ -23,3 +23,11 @@ en:
       default: "%d-%m-%Y"
       long: "%d %B, %Y"
       short: "%d %b"
+  enum_status:
+    waiting: Waiting
+    approval: Approval
+    rejected: Rejected
+    forwarded: Forwarded
+  enum_status_type:
+    lated: Lated
+    leaved: Leaved

@@ -1,5 +1,5 @@
 <div id="form-request" class="container">
-  <%= render "shared/error_messages" %>
+  <%= render "shared/error_messages", object: @report %>
 
   <h1 id="title" class="text-center"><%= t ".new_report" %></h1>
   <%= form_for(@report, url: reports_path) do |f| %>
