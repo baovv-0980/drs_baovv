@@ -1,0 +1,30 @@
+<% provide(:title, t(".begin_title")) %>
+<div class="container">
+  <h1 class="title text-center"><%= t ".title" %></h1>
+  <div id="create-control">
+    <div class="form-group center">
+       <%= form_tag(manager_show_reports_path, method: :get) do %>
+        <%= text_field_tag :q %>
+        <%= submit_tag "Search" %>
+      <% end %>
+    </div>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col"><%= t ".number" %></th>
+          <th scope="col"><%= t ".report_id" %></th>
+          <th scope="col"><%= t ".sender" %></th>
+          <th scope="col"><%= t ".report_title" %></th>
+          <th scope="col"><%= t ".report_time" %></th>
+          <th scope="col"><%= t ".report_action" %></th>
+        </tr>
+        <tbody>
+          <%= will_paginate @reports %>
+          <% @reports.each_with_index do |report, i| %>
+            <%= render partial: "manager_show_reports/report", locals: {report: report, i: i} %>
+          <% end %>
+        </tbody>
+      </thead>
+    </table>
+  </div>
+</div>

@@ -21,6 +21,9 @@
         <%= link_to t(".manage_request"), approve_requests_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
+        <%= link_to t(".manage_report"), manager_show_reports_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
         <%= link_to t(".manage_member"), manage_members_path, class: "nav-link" %>
       </li>
     <% else %>

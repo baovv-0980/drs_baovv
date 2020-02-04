@@ -1,0 +1,8 @@
+<tr>
+  <td><%= i += 1%></td>
+  <td><%= report.id %></td>
+  <td><%= report.user.name %></td>
+  <td><%= report.title %></td>
+  <td><%= l(report.created_at, format: :long) %></td>
+  <td><%= link_to t(".show"), report_path(report, type: "user_report", user_id: report.user.id), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %></td>
+</tr>

@@ -16,4 +16,15 @@ class Report < ApplicationRecord
   validates :next_plan, presence: true,
             length: {maximum: Settings.reports.text_max,
                      minimum: Settings.reports.text_min}
+
+
+  scope :with_long_title, ->(search) { where("users.name LIKE ?","%#{search}%") }
+
+  def self.search(search)
+    if search.blank?
+      all
+    else
+      with_long_title(search)
+    end
+  end
 end

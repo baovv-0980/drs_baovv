@@ -1,0 +1,13 @@
+en:
+  manager_show_reports:
+    index:
+      begin_title: Manager Reports
+      title: "[Manager] Manage Reports"
+      number: "#"
+      report_id: REPORT ID
+      sender: SENDER
+      report_title: REPORT TITLE
+      report_time: REPORT TIME
+      report_action: REPORT ACTION
+    report:
+      show: Show
