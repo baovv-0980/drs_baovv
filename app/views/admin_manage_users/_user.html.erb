@@ -1,6 +1,7 @@
 <tr>
   <td><%= i+1 %></td>
   <td><%= user.id %></td>
+  <td><%= user.role %></td>
   <% unless user.division.blank? %>
     <td><%= user.division.name %></td>
   <% else %>
@@ -11,9 +12,13 @@
   <td><%= user.phone %></td>
   <td><%= user.birthday %></td>
   <td><%= user.skill %></td>
-  <td>
-    <%= link_to "Show Reports", manage_report_path(user), method: :get %>
-    <%= link_to t(".edit"), edit_admin_manage_user_path(user), method: :get %>
-    <%= link_to t(".delete"), admin_manage_user_path(user), method: :delete, data: {confirm: t(".delete_sure")} %>
-  </td>
+  <% unless user.admin? %>
+    <td>
+      <%= link_to t(".show_reports"), manage_report_path(user), method: :get %>
+      <%= link_to t(".edit"), edit_admin_manage_user_path(user), method: :get %>
+      <%= link_to t(".delete"), admin_manage_user_path(user), method: :delete, data: {confirm: t(".delete_sure")} %>
+    </td>
+  <% else %>
+    <td></td>
+  <% end %>
 </tr>

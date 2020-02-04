@@ -2,4 +2,6 @@ en:
   manage_reports:
     show:
       no_report: No report
+      no_data: NO DATA
+      begin_title: Report of User
 

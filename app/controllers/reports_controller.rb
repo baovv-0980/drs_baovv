@@ -4,7 +4,6 @@ class ReportsController < ApplicationController
   def index
     @reports = current_user.reports.paginate(page: params[:page],
                                     per_page: Settings.reports.per_page)
-    flash.now[:success] = t ".no_found" if @reports.blank?
   end
 
   def new
@@ -33,11 +32,12 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.build report_params
-    if @report.save
+    ActiveRecord::Base.transaction do
+      @report.save!
       send_notification @report
       flash[:success] = t ".create_success"
       redirect_to reports_path
-    else
+    rescue ActiveRecord::RecordInvalid
       flash.now[:success] = t ".create_fault"
       render :new
     end
@@ -50,22 +50,8 @@ class ReportsController < ApplicationController
   end
 
   def send_notification report
-    if current_user.member?
-      current_division.users.manager.each do |manager|
-        report.notifications.create(title: t(".notifi_title"), sender_id: current_user.id,receiver_id: manager.id)
-      end
-    elsif current_user.manager?
-      if current_division.parent.blank?
-        flash[:success] = t ".highest_division"
-        redirect_to reports_path
-      else
-        current_division.parent.users.manager.each do |manager|
-         report.notifications.create(title: t(".notifi_title"), sender_id: current_user.id,receiver_id: manager.id)
-        end
-      end
-    else
-      flash[:success] = t ".create_fault"
-      redirect_to errors_path
+    current_division.users.manager.each do |manager|
+      report.notifications.create!(title: t(".notifi_title"), sender_id: current_user.id, receiver_id: manager.id)
     end
   end
 end

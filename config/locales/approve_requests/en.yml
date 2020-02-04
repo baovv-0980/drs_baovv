@@ -11,9 +11,11 @@ en:
       request_status: STATUS
       number: "#"
       no_found: There is no request
+      no_data: NO DATA
     request:
       show: Show
     update:
+      load_error: This request has been approved by another manager
       title: You has new request
       approve_title: You request approved
       reject_title: You request rejected

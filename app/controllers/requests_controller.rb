@@ -1,5 +1,4 @@
 class RequestsController < ApplicationController
-  before_action :correct_request, only: :destroy
   before_action :logged_in_user
 
   def index
@@ -46,12 +45,18 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-    if @request.destroy
-      flash[:success] = t ".post_destroy"
-      redirect_to requests_path
+    @request = current_user.requests.find_by id: params[:id]
+    if @request.status == Settings.enum.waiting
+      if @request.destroy
+        flash[:success] = t ".post_destroy"
+        redirect_to requests_path
+      else
+        flash[:success] = t ".destroy_fault"
+        redirect_to errors_path
+      end
     else
-      flash[:success] = t ".destroy_fault"
-      redirect_to errors_path
+      flash[:success] = t ".load_error"
+      redirect_to requests_path
     end
   end
 
@@ -61,19 +66,12 @@ class RequestsController < ApplicationController
     params.require(:request).permit Request::PARAMS
   end
 
-  def correct_request
-    @request = current_user.requests.find_by id: params[:id]
-    flash[:success] = t ".destroy_fault"
-    redirect_to root_path if @request.blank?
-  end
-
   def save_approval_request division
-
     ActiveRecord::Base.transaction do
       @request.save!
-      @request.approval_requests.create! division_id: division.id
+      @approval_request = @request.approval_requests.create! division_id: division.id
       division.users.manager.each do |manager|
-        @request.notifications.create!(title: t(".title"), sender_id: current_user.id,receiver_id: manager.id)
+        @approval_request.notifications.create!(title: t(".title"), sender_id: current_user.id, receiver_id: manager.id)
       end
       flash[:success] = t ".create_request"
       redirect_to requests_path

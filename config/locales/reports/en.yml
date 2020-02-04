@@ -3,13 +3,14 @@ en:
     index:
       no_found: No found Report
       begin_title: Report
-      title: LIST DAILY REPORTS
+      title: LIST REPORTS
       create_btn: Create a new report
       report_id: REPORT ID
       report_title: TITLE
       report_time:  TIME REQUEST
       report_action: ACTION
       number: "#"
+      no_data: NO DATA
     report:
       show: Show
     show:

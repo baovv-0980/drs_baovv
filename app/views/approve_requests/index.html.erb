@@ -26,7 +26,8 @@
         </tbody>
       </thead>
     </table>
+    <% if @requests.blank? %>
+      <h1 class="text-center"><%= t ".no_data" %></h1>
+    <% end %>
   </div>
 </div>
-
-<%= render "shared/dialog" %>

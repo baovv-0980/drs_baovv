@@ -23,5 +23,8 @@
         </tbody>
       </thead>
     </table>
+    <% if @divisions.blank? %>
+      <h1 class="text-center"><%= t ".no_data" %></h1>
+    <% end %>
   </div>
 </div>

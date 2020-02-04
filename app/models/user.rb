@@ -31,34 +31,33 @@ class User < ApplicationRecord
 
   has_secure_password
 
-
-  def self.search(type,search)
+  def self.search type, search
     if search.blank?
       all
     else
-      where(["#{type} LIKE ?","%#{search}%"])
+      where(["#{type} LIKE ?", "%#{search}%"])
     end
   end
 
-  def self.add(type,search)
+  def self.add type, search
     if search.blank?
       where(division_id: nil)
     else
-      where(division_id: nil).where("#{type} LIKE ?","%#{search}%")
+      where(division_id: nil).where("#{type} LIKE ?", "%#{search}%")
     end
   end
 
-  def self.all_user(type,search)
+  def self.all_user type, search
     if search.blank?
       all
     else
-      where("#{type} LIKE ?","%#{search}%")
+      where("#{type} LIKE ?", "%#{search}%")
     end
   end
 
-  def self.search(type,search)
+  def self.search type, search
     if search
-      where(["#{type} LIKE ?","%#{search}%"])
+      where(["#{type} LIKE ?", "%#{search}%"])
     else
       all
     end

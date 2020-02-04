@@ -17,6 +17,7 @@
         <tr>
           <th scope="col"><%= t ".number" %></th>
           <th scope="col"><%= t ".user_id" %></th>
+          <th scope="col"><%= t ".role" %></th>
           <th scope="col"><%= t ".division" %></th>
           <th scope="col"><%= t ".user_name" %></th>
           <th scope="col"><%= t ".user_email" %></th>
@@ -28,9 +29,7 @@
         <tbody>
           <%= will_paginate @users %>
           <% @users.each_with_index do |user, i| %>
-            <% unless user.admin? %>
               <%= render partial: "user", locals: {user: user, i: i} %>
-            <% end %>
           <% end %>
         </tbody>
       </thead>

@@ -17,10 +17,9 @@ class Report < ApplicationRecord
             length: {maximum: Settings.reports.text_max,
                      minimum: Settings.reports.text_min}
 
+  scope :with_long_title, ->(search){where("users.name LIKE ?", "%#{search}%")}
 
-  scope :with_long_title, ->(search) { where("users.name LIKE ?","%#{search}%") }
-
-  def self.search(search)
+  def self.search search
     if search.blank?
       all
     else

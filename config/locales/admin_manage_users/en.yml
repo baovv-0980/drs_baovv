@@ -6,10 +6,12 @@ en:
       delete_sure: You sure?
       delete: Delete
       edit: Edit
+      show_reports: Show Reports
     index:
       begin_title: Manage User
       title: LIST MEMBER
       number: "#"
+      role: ROLE
       user_id: USER ID
       division: DIVISION
       user_name: NAME

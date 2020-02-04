@@ -9,6 +9,8 @@ en:
       division_parent_path: DIVISION PARENT PATH
       action: ACTION
       no_found: No found Division
+      no_data: NO DATA
+      title: LIST DIVISION
     create:
       create_success: Create division success
     update:

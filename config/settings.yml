@@ -1,6 +1,7 @@
 mailer: from@example.com
 notifi: "notifi"
 enum:
+  waiting: waiting
   approval: approval
   rejected: rejected
   forwarded: forwarded

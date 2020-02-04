@@ -2,7 +2,7 @@ class Notification < ApplicationRecord
   after_create :send_notification
 
   def send_notification
-    NotificationBroadcastJob.perform_now(self, self.sender.name)
+    NotificationBroadcastJob.perform_now(self, sender.name)
   end
 
   enum status: {waiting: 0, approval: 1, rejected: 2}

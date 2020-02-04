@@ -4,8 +4,7 @@ class ManageDivisionsController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @divisions = Division.all.paginate(page: params[:page],per_page: Settings.requests.per_page)
-    flash.now[:success] = t ".no_found" if @divisions.blank?
+    @divisions = Division.all.paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def show
@@ -36,7 +35,7 @@ class ManageDivisionsController < ApplicationController
       redirect_to manage_divisions_path
     else
       flash[:success] = t ".update_fault"
-      redirect_to request.referer || root_path
+      redirect_to manage_divisions_path
     end
   end
 

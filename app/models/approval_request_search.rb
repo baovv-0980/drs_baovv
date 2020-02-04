@@ -7,13 +7,13 @@ class ApprovalRequestSearch
     @date_to = parsed_date(params[:date_to], Date.today.tomorrow.to_s)
   end
 
-  def scope(request_type)
+  def scope request_type
     request_type.where("created_at BETWEEN ? AND ?", @date_form, @date_to)
   end
 
   private
 
-  def parsed_date(date_string, default)
+  def parsed_date date_string, default
     Date.parse(date_string)
   rescue ArgumentError, TypeError
     default

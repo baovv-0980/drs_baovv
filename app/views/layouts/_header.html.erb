@@ -11,9 +11,6 @@
     <% elsif current_user.manager? %>
       <% unless current_user.division.parent_id.blank? %>
         <li class="nav-item">
-          <%= link_to t(".reports"), reports_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
           <%= link_to t(".requests"), requests_path, class: "nav-link" %>
         </li>
       <% end %>

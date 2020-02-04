@@ -11,6 +11,7 @@ en:
       request_action: ACTION
       request_status: STATUS
       number: "#"
+      no_data: NO DATA
     show:
       error: Error while trying to find a request that doesn't exist
       not_found: No request found
@@ -24,13 +25,13 @@ en:
       create_fault: Create an fault request
       highest_division: You are at the highest division
     destroy:
+      post_destroy: Request deleted
       destroy_fault: Destroy an fault request
+      load_error: Request can't destroy because error load system
     new:
       new_request: New Request
       placeholder: Write content here..
       submit: Submit
-    destroy:
-      post_destroy: Request deleted
     content:
       dialog_title: "Request %{request_type}"
       dialog_time: "Time %{request_type}"

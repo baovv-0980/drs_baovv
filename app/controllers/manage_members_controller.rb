@@ -4,14 +4,13 @@ class ManageMembersController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @users = current_division.users.search(params[:t],params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-    flash.now[:success] = t ".no_find" if @users.blank?
+    @users = current_division.users.search(params[:t], params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def update
-    if @user.update!(division_id: nil)
+    if @user.update(division_id: nil)
       flash[:success] = t ".update"
-      redirect_to request.referer || root_path
+      redirect_to manage_members_path
     else
       flash[:success] = t ".update_fault"
       render :index
@@ -26,7 +25,9 @@ class ManageMembersController < ApplicationController
 
   def correct_user
     @user = User.find_by id: params[:id]
+    return if @user
+
     flash[:success] = t "member.not_exits"
-    redirect_to root_path if @user.blank?
+    redirect_to root_path
   end
 end
