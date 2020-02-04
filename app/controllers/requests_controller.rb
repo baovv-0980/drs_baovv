@@ -4,7 +4,6 @@ class RequestsController < ApplicationController
   def index
     @requests = current_user.requests.paginate(page: params[:page],
                                     per_page: Settings.requests.per_page)
-    flash.now[:success] = t ".list_empty" if @requests.blank?
   end
 
   def show
@@ -27,7 +26,7 @@ class RequestsController < ApplicationController
       flash[:success] = t ".create_request"
       redirect_to requests_path
     rescue ActiveRecord::RecordInvalid
-      flash.now[:success] = t ".create_fault"
+      flash.now[:failure] = t ".create_fault"
       render :new
     end
   end
@@ -37,7 +36,7 @@ class RequestsController < ApplicationController
       flash[:success] = t ".post_destroy"
       redirect_to request.referer || root_path
     else
-      flash.now[:success] = t ".destroy_fault"
+      flash.now[:failure] = t ".destroy_fault"
       render :index
     end
   end
@@ -52,7 +51,7 @@ class RequestsController < ApplicationController
     @request = current_user.requests.find_by id: params[:id]
     return if @request
 
-    flash[:success] = t ".not_found"
+    flash[:empty] = t ".not_found"
     redirect_to root_path
   end
 end

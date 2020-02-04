@@ -1,4 +1,7 @@
 mailer: from@example.com
+enum:
+  approval: approval
+  rejected: rejected
 users:
   email: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i'
   name_max: 50

@@ -7,6 +7,11 @@
     <li class="nav-item">
       <%= link_to t(".requests"), requests_path, class: "nav-link" %>
     </li>
+    <% if current_user.manager? %>
+      <li class="nav-item">
+        <%= link_to t(".manage_requests"), approve_requests_path, class: "nav-link" %>
+      </li>
+    <% end %>
   </ul>
 
   <ul class="navbar-nav ">
