@@ -1,0 +1,107 @@
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <%= image_tag("logos/logo.png", class: "brand-image img-circle elevation-3") %>
+      <span class="brand-text font-weight-light">DAILY REPORT</span>
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview user-panel">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+                Alexander Pierce
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <%= link_to profile_path(current_user), class: "nav-link" do %>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profile</p>
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to logout_path, method: :delete, class: "nav-link" do %>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Logout</p>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Manage
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <% if current_user.Admin? %>
+                <li class="nav-item">
+                  <%= link_to admin_manage_users_path, class: "nav-link" do %>
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage User</p>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+
+          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Calendar
+                <span class="badge badge-info right">2</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-image"></i>
+              <p>
+                Gallery
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.0.2
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+</body>

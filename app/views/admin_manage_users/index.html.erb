@@ -1,38 +1,52 @@
 <% provide(:title, t(".begin_title")) %>
-<div class="container">
-  <h1 class="title text-center"><%= t ".title" %></h1>
-    <div class="create">
-      <%= link_to t(".create_user"), new_admin_manage_user_path, class: "btn btn-primary" %>
+<div class="content-wrapper">
+  <section class="content">
+    <div id="my_container">
+      <div class="col-12">
+        <div class="create">
+          <%= link_to "Create new a user", new_admin_manage_user_path, class: "btn btn-primary" %>
+        </div>
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><b>Manage User</b></h3>
+              <% if @users.blank? %>
+                <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+              <% end %>
+              <div class="card-tools">
+                <%= form_tag admin_manage_users_path, class: "form-inline", method: :get do %>
+                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                    <i class="fas fa-search"></i>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+              <table class="table table-head-fixed text-nowrap table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Staff Type</th>
+                    <th scope="col">Work Space</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= render partial: "user", collection: @users %>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <%= will_paginate @users %>
+      </div>
     </div>
-  <div class="form-group center">
-     <%= form_tag(admin_manage_users_path, method: :get) do %>
-      <%= select_tag :t, options_for_select([Settings.enum.name,Settings.enum.email,Settings.enum.id]) %>
-      <%= text_field_tag :q %>
-      <%= submit_tag "Search" %>
-    <% end %>
-  </div>
-  <div id="create-control">
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= t ".user_id" %></th>
-          <th scope="col"><%= t ".role" %></th>
-          <th scope="col"><%= t ".division" %></th>
-          <th scope="col"><%= t ".user_name" %></th>
-          <th scope="col"><%= t ".user_email" %></th>
-          <th scope="col"><%= t ".user_phone" %></th>
-          <th scope="col"><%= t ".user_birthday" %></th>
-          <th scope="col"><%= t ".user_skill" %></th>
-          <th scope="col"><%= t ".action" %></th>
-        </tr>
-        <tbody>
-          <%= will_paginate @users %>
-          <% @users.each_with_index do |user, i| %>
-              <%= render partial: "user", locals: {user: user, i: i} %>
-          <% end %>
-        </tbody>
-      </thead>
-    </table>
-  </div>
+  </section>
+  <!-- /.content -->
 </div>

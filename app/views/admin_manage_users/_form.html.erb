@@ -1,52 +1,168 @@
-<%= form_for(@user, url: path) do |f|%>
-  <%= render "shared/error_messages", object: f.object %>
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+<div id="my_container" class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Create new a user</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Create new a user</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
 
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: "form-control" %>
-  </div>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <%= image_tag("logos/img_user.png", class: "profile-user-img img-fluid img-circle") %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="settings">
+                  <%= form_for(@user, url: path, class: "form-horizontal") do |f|%>
+                    <%= render "shared/error_messages", object: f.object %>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :email, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.email_field :email, class: "form-control", placeholder:"Email" %>
+                      </div>
+                    </div>
 
-  <div class="form-group">
-    <%= f.label :birthday %>
-    <%= f.date_field :birthday, class: "form-control" %>
-  </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :name, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :name, class: "form-control", placeholder:"Name" %>
+                      </div>
+                    </div>
 
-  <div class="form-group">
-    <%= f.label :phone %>
-    <%= f.text_field :phone, class: "form-control" %>
-  </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :phone, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :phone, class: "form-control", placeholder:"Phone" %>
+                      </div>
+                    </div>
 
-  <div id="select" class="form-group">
-    <div>
-    <%= f.label :role %>
-    <%= f.select :role, role_type_select %>
-    </div>
-    <div>
-      <%= f.label :division_id %>
-      <%= f.select :division_id, division_type_select.collect {|i| [i.name, i.id]}, { include_blank: "NULL" } %>
-    </div>
-  </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :password, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :password, class: "form-control", placeholder:"Password" %>
+                      </div>
+                    </div>
 
-  <div class="form-group">
-    <%= f.label :skill %>
-    <%= f.text_area :skill, class: "form-control" %>
-  </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :password_confirmation, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :password_confirmation, class: "form-control", placeholder:"Retype Password" %>
+                      </div>
+                    </div>
 
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, class: "form-control" %>
-  </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :birthday, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                          <%= f.date_field :birthday, class: "form-control" %>
+                        </div>
+                      </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, class: "form-control" %>
-  </div>
+                      <%= f.label :position, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :position, position_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
 
-  <div class="actions">
-    <%= f.submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
+                    <div class="form-group row">
+                      <%= f.label :division_id, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :division_id, division_type_select.collect {|i| [i.name, i.id]}, {}, {class: "form-control custom-select" }  %>
+                      </div>
+                      <%= f.label :role, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :role, role_division_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                      <%= f.label :gender, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :gender, gender_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+
+                      <%= f.label :staff_type, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :staff_type, staff_type_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <%= f.label :workspace, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :workspace, workspace_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+
+                      <%= f.label :nationality, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :nationality, nationality_select,{}, {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :skill, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_area :skill, class: "form-control", placeholder: "Skill" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <%= f.submit "Submit", class: "btn btn-danger" %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

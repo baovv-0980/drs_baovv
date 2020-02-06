@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  include ProfilesHelper
 
   before_action :set_locale, :notification
 

@@ -7,6 +7,11 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.text :skill
       t.date :birthday
       t.string :phone
+      t.integer :staff_type, default: 0
+      t.integer :workspace, default: 0
+      t.integer :gender, default: 0
+      t.integer :nationality, default: 0
+      t.integer :position, default: 0
       t.integer :role, default: 0
       t.references :division, foreign_key: true
       t.timestamps

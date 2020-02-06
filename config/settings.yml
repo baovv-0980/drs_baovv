@@ -17,6 +17,7 @@ users:
   email_max: 50
   pass_min: 5
   pass_max: 16
+  per_page: 5
 divisions:
   name_max: 50
 reports:

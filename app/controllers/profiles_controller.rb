@@ -1,4 +1,8 @@
 class ProfilesController < ApplicationController
+  def show
+    @user = User.find_by id: params[:id]
+  end
+
   def edit
     @user = User.find_by id: params[:id]
   end
@@ -6,8 +10,8 @@ class ProfilesController < ApplicationController
   def update
     @user = User.find_by id: params[:id]
     if @user.update(user_params)
-      flash[:success] = t ".update_success"
-      redirect_to root_path
+      flash[:success] = t "Cap nhat thanh cong"
+      redirect_to profile_path(@user)
     else
       flash.now[:success] = t ".update_fault"
       render :edit

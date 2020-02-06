@@ -1,10 +1,2 @@
 <% provide :title, t(".title_begin") %>
-<div id="form-request" class="container">
-  <div id="sign_up" class="container">
-    <h1 class="center"><%= t ".title_begin" %></h1>
-    <div class="gravatar_edit">
-    </div>
-      <%= render partial: "form", locals: {user: @user, path: admin_manage_user_path} %>
-    </div>
-  </div>
-</div>
+<%= render partial: "form", locals: {user: @users, path: admin_manage_user_path}%>

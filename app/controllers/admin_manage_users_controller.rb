@@ -4,11 +4,23 @@ class AdminManageUsersController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @users = User.all_user(params[:t], params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    if params[:q].blank?
+      @users = User.all.paginate(page: params[:page], per_page: Settings.users.per_page)
+    else
+      @users = User.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.users.per_page)
+    end
   end
 
   def new
     @user = User.new
+  end
+
+  def show
+    @user = User.find_by id: params[:id]
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit
@@ -21,6 +33,7 @@ class AdminManageUsersController < ApplicationController
       flash[:info] = t ".create_success"
       redirect_to admin_manage_users_path
     else
+      flash.now[:errors] = "Create a new user errors"
       render :new
     end
   end
@@ -30,25 +43,25 @@ class AdminManageUsersController < ApplicationController
       flash[:success] = t ".update"
       redirect_to admin_manage_users_path
     else
-      flash[:success] = t ".update_fault"
-      redirect_to request.referer || root_path
+      flash.now[:failure] = t ".update_fault"
+      redirect_to :edit
     end
   end
 
   def destroy
     if @user.destroy
       flash[:success] = t ".delete"
-      redirect_to request.referer || root_path
-    else
-      flash[:success] = t ".delete_fail"
       redirect_to admin_manage_users_path
+    else
+      flash[:failure] = t ".delete_fail"
+      redirect_to root_path
     end
   end
 
   private
 
   def admin_user
-    redirect_to root_path unless current_user.admin?
+    redirect_to root_path unless current_user.Admin?
   end
 
   def correct_user

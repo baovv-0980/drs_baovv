@@ -1,22 +1,23 @@
 <tr>
-  <td><%= i+1 %></td>
-  <td><%= user.id %></td>
-  <td><%= user.role %></td>
-  <% unless user.division.blank? %>
-    <td><%= user.division.name %></td>
-  <% else %>
-    <td><%= t".nil" %></td>
-  <% end %>
-  <td><%= user.name %></td>
+  <td><%= user_counter + 1 %></td>
   <td><%= user.email %></td>
-  <td><%= user.phone %></td>
+  <td><%= user.name %></td>
+  <td><%= user.gender %></td>
   <td><%= user.birthday %></td>
-  <td><%= user.skill %></td>
-  <% unless user.admin? %>
+  <td><%= user.phone %></td>
+  <td><%= user.staff_type %></td>
+  <td><%= user.workspace %></td>
+  <% unless user.Admin? %>
     <td>
-      <%= link_to t(".show_reports"), manage_report_path(user), method: :get %>
-      <%= link_to t(".edit"), edit_admin_manage_user_path(user), method: :get %>
-      <%= link_to t(".delete"), admin_manage_user_path(user), method: :delete, data: {confirm: t(".delete_sure")} %>
+      <%= link_to admin_manage_user_path(user.id), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+       <i class="nav-icon far fa-eye"></i>
+      <% end %>
+      <%= link_to edit_admin_manage_user_path(user), class: "my_icon", method: :get do %>
+        <i class="nav-icon far fa-edit"></i>
+      <% end %>
+      <%= link_to admin_manage_user_path(user), class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")} do %>
+        <i class="nav-icon far fa-trash-alt"></i>
+      <% end %>
     </td>
   <% else %>
     <td></td>

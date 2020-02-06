@@ -20,7 +20,7 @@ class ManageMembersController < ApplicationController
   private
 
   def manager_user
-    redirect_to root_path unless current_user.manager?
+    redirect_to root_path unless current_user.Manager?
   end
 
   def correct_user

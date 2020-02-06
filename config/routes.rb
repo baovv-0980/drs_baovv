@@ -9,11 +9,12 @@ Rails.application.routes.draw do
   resources :approve_requests, only: [:index, :show, :update]
   resources :manage_members, only: [:index, :update]
   resources :add_members, only: [:index, :update]
-  resources :admin_manage_users, except: [:show]
+  resources :admin_manage_users
   resources :errors, only: [:index]
   resources :manage_divisions
   resources :manage_reports, only: [:show]
-  resources :profiles, only: [:edit, :update]
+  resources :profiles, only: [:show, :edit, :update]
   resources :manager_show_reports, only: [:index]
+  resources :reset_passwords, only: [:edit, :update]
   mount ActionCable.server => "/cable"
 end

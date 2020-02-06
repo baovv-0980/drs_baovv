@@ -2,12 +2,16 @@
   "name": "init_project",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
     "bootstrap": "4.3.1",
+    "inputmask": "^5.0.3",
     "jquery": "^3.4.1",
+    "jquery-inputmask": "^1.0.1",
+    "momentjs": "^2.0.0",
     "popper.js": "^1.16.0",
     "turbolinks": "^5.2.0"
   },

@@ -2,12 +2,17 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = Settings.email
   PARAMS = %i(name email birthday phone role division_id skill password password_confirmation).freeze
 
-  PARAMS_PROFILE = %i(name birthday phone skill password password_confirmation).freeze
+  PARAMS_PROFILE = %i(name birthday phone skill gender).freeze
+  PARAMS_PASSWORD = %i(password).freeze
 
   attr_accessor :remember_token
 
-  enum role: {member: 0, manager: 1, admin: 2}
-
+  enum role: {Member: 0, Manager: 1, Admin: 2}
+  enum staff_type: {EDU: 0, Intern: 1, Fresher: 2, Developer: 3}
+  enum nationality: {Vietnam: 0, Japan: 1}
+  enum workspace: {Hanoi: 0, DaNang: 1}
+  enum gender: {Male: 0, Female: 1}
+  enum position: {DEV: 0, QA: 1, HR: 2}
   belongs_to :division, optional: true
   has_many :reports, dependent: :destroy
   has_many :requests, dependent: :destroy
@@ -27,9 +32,14 @@ class User < ApplicationRecord
   validates :birthday, presence: true
   validates :phone, presence: true
   validates :skill, presence: true
+  validates :division_id, presence: true
   before_save :downcase_email
 
   has_secure_password
+
+  scope :search_user, ->(search) {where "name LIKE ? OR id LIKE ? OR email LIKE ?","%#{search}%", "%#{search}%", "%#{search}%"}
+
+  scope :division_empty, -> {where division_id: nil}
 
   def self.search type, search
     if search.blank?
@@ -44,14 +54,6 @@ class User < ApplicationRecord
       where(division_id: nil)
     else
       where(division_id: nil).where("#{type} LIKE ?", "%#{search}%")
-    end
-  end
-
-  def self.all_user type, search
-    if search.blank?
-      all
-    else
-      where("#{type} LIKE ?", "%#{search}%")
     end
   end
 

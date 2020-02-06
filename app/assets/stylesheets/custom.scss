@@ -1,3 +1,4 @@
+$bg-empty: #f4f6f9;
 .dropdown-menu.show{
   left: unset;
   right: 0;
@@ -8,4 +9,32 @@ ul#notification-list {
 }
 .welcome{
   margin: 100px;
+}
+
+span.badge.badge-warning.navbar-badge {
+  top: -2px;
+  right: -7px;
+  position: absolute;
+}
+
+li.nav-item.dropdown {
+  padding-right: 20px;
+}
+
+#my_container{
+  padding: 2% 4%;
+  background: $bg-empty;
+}
+
+.my_icon{
+  margin: 0 5px;
+}
+
+.no_data{
+  color: red;
+  margin-left: 15px;
+}
+
+input#user_birthday {
+    margin: 0;
 }

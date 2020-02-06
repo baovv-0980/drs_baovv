@@ -1,0 +1,38 @@
+<div class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <b>Password Changed</b>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <%= form_for @user, url: reset_password_path do |f|%>
+        <%= render "shared/error_messages", object: f.object %>
+        <div class="input-group mb-3">
+          <%= f.password_field :password, class: "form-control", placeholder:"Password" %>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <%= f.password_field :password_confirmation, class: "form-control", placeholder:"Retype Password" %>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <%= f.submit "Change password", class: "btn btn-primary btn-block" %>
+          </div>
+          <!-- /.col -->
+        </div>
+      <% end %>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+</div>
