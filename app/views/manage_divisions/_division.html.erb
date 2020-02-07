@@ -1,20 +1,19 @@
 <tr>
-  <td><%= i+1 %></td>
-  <td><%= division.id %></td>
+  <td><%= division_counter + 1 %></td>
   <td><%= division.name %></td>
-  <% unless division.parent_id.blank? %>
-    <td><%= division.parent_id %></td>
-  <% else %>
-     <td><%= t "nil" %></td>
-  <% end %>
-  <% unless division.parent_path.blank? %>
-    <td><%= division.parent_path %></td>
-  <% else %>
-    <td><%= t "nil" %></td>
-  <% end %>
+  <td><%= division.parent&.name %></td>
+  <td><%= division.parent_path %></td>
   <td>
-    <%= link_to t(".show"), manage_division_path(division), method: :get %>
-    <%= link_to t(".edit"), edit_manage_division_path(division), method: :get %>
-    <%= link_to t(".delete"), manage_division_path(division), method: :delete, data: {confirm: t(".delete_sure")} %>
+    <%= link_to manage_division_path(division),class: "my_icon" do %>
+      <i class="nav-icon far fa-user"></i>
+    <% end %>
+    <%= link_to edit_manage_division_path(division),class: "my_icon" do %>
+      <i class="nav-icon far fa-edit"></i>
+    <% end %>
+    <% if division.id != 1 %>
+      <%= link_to manage_division_path(division), {class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")}} do %>
+         <i class="nav-icon far fa-trash-alt"></i>
+      <% end %>
+    <% end %>
   </td>
 </tr>

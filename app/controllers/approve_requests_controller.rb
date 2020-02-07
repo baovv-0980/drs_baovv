@@ -4,8 +4,21 @@ class ApproveRequestsController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @search = ApprovalRequestSearch.new(params[:search])
-    @requests = @search.scope(current_division.approval_requests).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    if params[:date]
+      search = date_choose(params[:date])
+      @approval_requests = current_division.approval_requests.range_date(search).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    else
+      if params[:type].blank? && params[:q].blank?
+        @approval_requests = current_division.approval_requests.paginate(page: params[:page],
+                                    per_page: Settings.requests.per_page)
+      elsif params[:type] && params[:q].blank?
+        @approval_requests = current_division.approval_requests.search_type(params[:type]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+      elsif params[:type].blank? && params[:q]
+        @approval_requests = current_division.approval_requests.joins(request: :user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+      else
+        @approval_requests = current_division.approval_requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+      end
+    end
   end
 
   def show
@@ -16,9 +29,9 @@ class ApproveRequestsController < ApplicationController
   end
 
   def update
-    if @request.status == Settings.enum.waiting
+    if @approval_request.status == Settings.enum.waiting
       ActiveRecord::Base.transaction do
-        @request.update!(status: params[:status])
+        @approval_request.update!(status: params[:status])
         create_parent_request if params[:status] == Settings.enum.approval
         rejected_request if params[:status] == Settings.enum.rejected
         flash_success
@@ -34,23 +47,23 @@ class ApproveRequestsController < ApplicationController
   private
 
   def rejected_request
-    @request.request.notifications.create!(title: t(".reject_title"), sender_id: current_user.id, receiver_id: @request.request.user_id, status: Settings.enum.rejected)
-    @request.request.update!(status: Settings.enum.rejected)
+    @approval_request.request.notifications.create!(title: t(".reject_title"), sender_id: current_user.id, receiver_id: @approval_request.request.user_id, status: Settings.enum.rejected)
+    @approval_request.request.update!(status: Settings.enum.rejected)
   end
 
   def create_parent_request
     if current_division.parent_id.blank?
-      @request.request.update!(status: Settings.enum.approval)
-      send_notifi_user @request
+      @approval_request.request.update!(status: Settings.enum.approval)
+      send_notifi_user @approval_request
     else
-      @request = current_division.parent.approval_requests.create!(request_id: @request.request_id)
-      send_notifi_manager @request
-      forwarded_request_user @request
+      @approval_request = current_division.parent.approval_requests.create!(request_id: @approval_request.request_id)
+      send_notifi_manager @approval_request
+      forwarded_request_user @approval_request
     end
   end
 
   def forwarded_request_user _user_request
-    @request.request.update!(status: Settings.enum.forwarded)
+    @approval_request.request.update!(status: Settings.enum.forwarded)
   end
 
   def send_notifi_user user_request
@@ -68,8 +81,8 @@ class ApproveRequestsController < ApplicationController
   end
 
   def correct_request
-    @request = current_division.approval_requests.find_by id: params[:id]
-    return if @request
+    @approval_request = current_division.approval_requests.find_by id: params[:id]
+    return if @approval_request
 
     flash[:success] = t "approve_requests.not_exits"
     redirect_to root_path

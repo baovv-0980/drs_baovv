@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token
 
-  enum role: {Member: 0, Manager: 1, Admin: 2}
+  enum role: {member: 0, manager: 1, admin: 2}
   enum staff_type: {EDU: 0, Intern: 1, Fresher: 2, Developer: 3}
   enum nationality: {Vietnam: 0, Japan: 1}
   enum workspace: {Hanoi: 0, DaNang: 1}

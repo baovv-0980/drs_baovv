@@ -1,14 +1,23 @@
 <tr>
   <td><%= request_counter += 1 %></td>
-  <td><%= request.id %></td>
+  <td><%= "RQ#{request.id}" %></td>
+  <td><%= request.user.name %></td>
   <td><%= request.request_type %></td>
   <td><%= l(request.created_at, format: :short) %></td>
-  <td><%= l(request.time, format: :short) %></td>
+  <td><%= "#{l(request.time_from, format: :short)} - #{l(request.time_to, format: :short)}" %></td>
+  <td><%= request.reason %></td>
   <td><%= request.status %></td>
   <td>
-    <% if request.waiting? %>
-      <%= link_to t(".delete"), request_path(request), method: :delete, data: {confirm: t(".sure")} %>
+    <%= link_to request_path(request, type: "request"), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+       <i class="nav-icon far fa-eye"></i>
     <% end %>
-    <%= link_to t(".show"), request_path(request, type: "request"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %>
+    <% if request.waiting? %>
+      <%= link_to edit_request_path(request) do %>
+         <i class="nav-icon far fa-edit"></i>
+      <% end %>
+      <%= link_to request_path(request), method: :delete, data: {confirm: t(".sure")} do %>
+        <i class="nav-icon far fa-trash-alt"></i>
+      <% end %>
+    <% end %>
   </td>
 </tr>

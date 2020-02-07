@@ -1,0 +1,35 @@
+ <div class="card-body">
+  <div class="tab-content">
+    <div class="active tab-pane" id="activity">
+      <!-- Post -->
+      <div class="post">
+        <div class="user-block">
+          <%= image_tag("logos/img_user.png", class: "img-circle img-bordered-sm") %>
+          <span class="username">
+            <a href="#"><%= notification.sender.name %></a>
+          </span>
+          <span class="description"><%= "#{notification.title} - #{l(notification.created_at, format: :short)}" %></span>
+        </div>
+        <!-- /.user-block -->
+        <span class="float-right">
+          <% if notification.object_type == Settings.enum.report %>
+            <%= link_to report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: " text-sm"} do %>
+              <i class="far fa-eye mr-1"></i> Show Notification
+            <% end %>
+           <% elsif notification.object_type == Settings.enum.request %>
+            <%= link_to request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: "text-sm"} do %>
+              <i class="far fa-eye mr-1"></i> Show Notification
+            <% end %>
+          <% elsif notification.object_type == Settings.enum.approval_request %>
+            <%= link_to approve_request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: " text-sm"} do %>
+              <i class="far fa-eye mr-1"></i> Show Notification
+            <% end %>
+          <% end %>
+        </span>
+      </div>
+      <!-- /.post -->
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+  <!-- /.tab-content -->
+</div><!-- /.card-body -->

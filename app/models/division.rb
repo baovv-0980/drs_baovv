@@ -10,11 +10,5 @@ class Division < ApplicationRecord
   validates :name, presence: true,
              length: {maximum: Settings.divisions.name_max}
 
-  def self.all_division type, search
-    if search.blank?
-      all
-    else
-      where("#{type} LIKE ?", "%#{search}%")
-    end
-  end
+  scope :search_division, ->(search) {where "name LIKE ? OR id LIKE ?","%#{search}%", "%#{search}%"}
 end

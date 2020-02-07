@@ -1,0 +1,104 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- /.col -->
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="active tab-pane" id="settings">
+                <%= form_for(@request, url: path, class: "form-horizontal") do |f|%>
+                  <%= render "shared/error_messages", object: f.object %>
+                    <div class="form-group row">
+
+                      <div class="col-sm-2">
+                        <%= f.label "Name", class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" disabled="disabled"  placeholder="<%= @request.user.name %>">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label "Email", class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" disabled="disabled"  placeholder="<%= @request.user.email %>">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label "Position", class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <input type="position" class="form-control" disabled="disabled"  placeholder="<%= @request.user.position %>">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label "Workspace", class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <input type="workspace" class="form-control" disabled="disabled"  placeholder="<%= @request.user.workspace %>">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <%= f.label :request_type, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-10">
+                        <%= f.select :request_type, request_type_select, {} , {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :time_from, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                       <%= f.datetime_field :time_from , {class: "form-control"} %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :time_to, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.datetime_field :time_to , {class: "form-control"} %>
+                      </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :reason, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_area :reason, class: "form-control", placeholder: "Reason" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <%= f.submit "Submit", class: "btn btn-danger" %>
+                      </div>
+                    </div>
+                <% end %>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <div class="col-md-2">
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>
+

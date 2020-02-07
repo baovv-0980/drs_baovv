@@ -1,7 +1,9 @@
 <% provide(:title, t(".begin_title")) %>
-<div id="form-request" class="container">
-  <%= render "shared/error_messages", object: @division %>
+<div id="my_container" class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <%= render partial: "shared/head_profile", locals: {path1: admin_manage_users_path, title: "Manage User", link1: "Manage User", link2: "Create new a user"}%>
 
-  <h1 id="title" class="text-center"><%= t ".new_report" %></h1>
-  <%= render partial: "form", locals: {division: @division, path: manage_divisions_path} %>
+  <!-- Main content -->
+  <%= render partial: "manage_divisions/form", locals: {division: @division, path: manage_divisions_path}%>
+  <!-- /.content -->
 </div>

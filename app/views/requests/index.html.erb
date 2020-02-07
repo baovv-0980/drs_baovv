@@ -1,31 +1,52 @@
 <% provide(:title, t(".begin_title")) %>
-<div class="container">
-  <h1 class="title text-center"><%= t ".title" %></h1>
-  <div id="create-control">
-    <% unless current_division.parent_id.blank? && current_user.manager? %>
+<div class="content-wrapper">
+  <%= render partial: "shared/head_profile", locals: {path1: "", title: "List request IL(M), LE, LO, IL(A)", link1: "", link2: ""}%>
+  <section class="content">
+    <div class="col-12">
       <div class="create">
-        <%= link_to t(".create_btn"), new_request_path, class: "btn btn-primary" %>
+        <%= link_to "Create new a Request", new_request_path, class: "btn btn-primary" %>
       </div>
-    <% end %>
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= t ".request_id" %></th>
-          <th scope="col"><%= t ".request_title" %></th>
-          <th scope="col"><%= t ".request_time" %></th>
-          <th scope="col"><%= t ".request_time_create" %></th>
-          <th scope="col"><%= t ".request_status" %></th>
-          <th scope="col"><%= t ".request_action" %></th>
-        </tr>
-        <tbody>
-          <%= will_paginate @requests %>
-          <%= render @requests %>
-        </tbody>
-      </thead>
-    </table>
-    <% if @requests.blank? %>
-      <h1 class="text-center"><%= t ".no_data" %></h1>
-    <% end %>
-  </div>
+      <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><b>List your request</b></h3>
+            <% if @requests.blank? %>
+              <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+            <% end %>
+            <div class="card-tools">
+              <%= form_tag requests_path, class: "form-inline", method: :get do %>
+                <%= select_tag :type, raw(status_request_select),{include_blank: "Choose status", class: "form-control select"} %>
+                <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                  <i class="fas fa-search"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Staff Code</th>
+                  <th scope="col">Staff Name</th>
+                  <th scope="col">KIND</th>
+                  <th scope="col">Time Of Creation </th>
+                  <th scope="col">Time Request</th>
+                  <th scope="col">Reason</th>
+                  <th scope="col">STATUS</th>
+                  <th scope="col">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "requests/request", collection: @requests, locals: {type_show: true} %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+      </div>
+      <%= will_paginate @requests %>
+    </div>
+  </section>
+  <!-- /.content -->
 </div>

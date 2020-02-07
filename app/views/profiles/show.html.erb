@@ -1,5 +1,5 @@
 <div class="content-wrapper">
-  <%= render partial: "shared/head_profile"%>
+  <%= render partial: "shared/head_profile", locals: {path1: profile_path(@user), title: "Profile", link1: @user.name , link2: "Active"}%>
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">

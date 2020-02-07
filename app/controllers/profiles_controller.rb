@@ -1,4 +1,9 @@
 class ProfilesController < ApplicationController
+
+  def index
+    @notifications = current_user.notifications.paginate(page: params[:page], per_page: Settings.requests.per_page)
+  end
+
   def show
     @user = User.find_by id: params[:id]
   end

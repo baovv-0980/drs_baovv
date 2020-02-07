@@ -1,33 +1,57 @@
 <% provide(:title, t(".begin_title")) %>
-<div class="container">
-  <h1 class="title text-center"><%= t ".title" %></h1>
-  <div class="form-group">
-    <%= form_tag approve_requests_path, method: :get do %>
-      <%= text_field_tag "search[date_form]", @search.date_form %>
-      <%= text_field_tag "search[date_to]", @search.date_to %>
-      <%= submit_tag "search" %>
-    <% end %>
-  </div>
-  <div id="create-control">
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= t ".request_id" %></th>
-          <th scope="col"><%= t ".request_time" %></th>
-          <th scope="col"><%= t ".request_status" %></th>
-          <th scope="col"><%= t ".request_action" %></th>
-        </tr>
-        <tbody>
-          <%= will_paginate @requests %>
-          <% @requests.each_with_index do |request, i| %>
-            <%= render partial: "request", locals: {request: request, i: i} %>
-          <% end %>
-        </tbody>
-      </thead>
-    </table>
-    <% if @requests.blank? %>
-      <h1 class="text-center"><%= t ".no_data" %></h1>
-    <% end %>
-  </div>
+<div class="content-wrapper">
+  <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage List Request IL, LE, LO", link1: "", link2: ""}%>
+  <section class="content">
+    <div class="col-12">
+      <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><b>List your request</b></h3>
+            <% if @approval_requests.blank? %>
+              <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+            <% end %>
+            <div class="card-tools row">
+              <div class="col-9">
+                <%= form_tag approve_requests_path, class: "form-inline", method: :get do %>
+                  <%= select_tag :type, raw(status_request_select),{include_blank: "Choose status", class: "form-control select"} %>
+                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                    <i class="fas fa-search"></i>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <div class="col-3">
+                <%= form_tag approve_requests_path, class: "form-inline", method: :get do %>
+                  <%= select_tag :date, raw(date_select.collect {|i| "<option>#{i[0]}</option>"}),{include_blank: "Choose date", class: "form-control select", onchange: "this.form.submit()"} %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Sender Code</th>
+                  <th scope="col">Sender Name</th>
+                  <th scope="col">KIND</th>
+                  <th scope="col">Time Of Creation </th>
+                  <th scope="col">Time Request</th>
+                  <th scope="col">Reason</th>
+                  <th scope="col">STATUS</th>
+                  <th scope="col">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "approve_requests/approval_request", collection: @approval_requests %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+      </div>
+      <%= will_paginate @approval_requests %>
+    </div>
+  </section>
+  <!-- /.content -->
 </div>

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   resources :reports, except: [:edit, :update, :destroy]
-  resources :requests, except: [:edit]
+  resources :requests
   resources :approve_requests, only: [:index, :show, :update]
   resources :manage_members, only: [:index, :update]
   resources :add_members, only: [:index, :update]
@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   resources :errors, only: [:index]
   resources :manage_divisions
   resources :manage_reports, only: [:show]
-  resources :profiles, only: [:show, :edit, :update]
+  resources :profiles, only: [:index, :show, :edit, :update]
   resources :manager_show_reports, only: [:index]
   resources :reset_passwords, only: [:edit, :update]
+  resources :notifications, only: [:index, :show]
   mount ActionCable.server => "/cable"
 end

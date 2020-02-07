@@ -1,0 +1,13 @@
+<tr>
+  <td><%= approval_request_counter + 1%></td>
+  <td><%= "MB#{approval_request.request.user.id}" %></td>
+  <td><%= approval_request.request.user.name %></td>
+  <td><%= approval_request.request.request_type %></td>
+  <td><%= l(approval_request.request.created_at, format: :short) %></td>
+  <td><%= "#{l(approval_request.request.time_from, format: :short)} - #{l(approval_request.request.time_to, format: :short)}" %></td>
+  <td><%= approval_request.request.reason %></td>
+  <td><%= approval_request.status %></td>
+  <td><%= link_to approve_request_path(approval_request), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+       <i class="nav-icon far fa-eye"></i>
+    <% end %></td>
+</tr>

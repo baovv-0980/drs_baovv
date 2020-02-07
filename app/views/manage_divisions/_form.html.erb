@@ -1,17 +1,58 @@
-<%= form_for(@division, url: path) do |f| %>
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :parent_id %>
-    <%= f.text_field :parent_id, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :parent_path %>
-    <%= f.text_field :parent_path, class: "form-control" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
+ <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="settings">
+                  <%= form_for(@division, url: path, class: "form-horizontal") do |f|%>
+                    <%= render "shared/error_messages", object: f.object %>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :name, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :name, class: "form-control", placeholder:"Division Name" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :parent_path, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :parent_path, class: "form-control", placeholder:"Parent Division Name" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <%= f.label :parent_id, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :parent_id, division_edit_select(@division).collect {|i| [i.name, i.id]}, {include_blank: "NULL"} , {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <%= f.submit "Submit", class: "btn btn-primary" %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>

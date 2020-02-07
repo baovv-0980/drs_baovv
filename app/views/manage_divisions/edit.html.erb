@@ -1,10 +1,9 @@
 <% provide :title, t(".title_begin") %>
-<div id="form-request" class="container">
-  <div id="sign_up" class="container">
-    <h1 class="center"><%= t ".title_begin" %></h1>
-    <div class="gravatar_edit">
-    </div>
-      <%= render partial: "form", locals: {division: @division, path: manage_division_path} %>
-    </div>
-  </div>
+<div id="my_container" class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <%= render partial: "shared/head_profile", locals: {path1: admin_manage_users_path, title: "Manage User", link1: "Manage User", link2: "Create new a user"}%>
+
+  <!-- Main content -->
+  <%= render partial: "manage_divisions/form", locals: {division: @division, path: manage_division_path}%>
+  <!-- /.content -->
 </div>

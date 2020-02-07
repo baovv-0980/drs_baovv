@@ -11,7 +11,3 @@ require("jquery")
 
 require("packs/demo")
 require("packs/adminlte")
-
-jQuery(function($){
-   $("#date").mask("99/99/9999");
-});

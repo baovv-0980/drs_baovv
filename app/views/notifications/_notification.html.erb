@@ -1,12 +1,17 @@
-<li class="dropdown-item">
-  <% if notification.object_type == Settings.enum.report %>
-    <%= link_to notification.title, report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
-    <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
-   <% elsif notification.object_type == Settings.enum.request %>
-    <%= link_to notification.title, request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
-    <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
-  <% elsif notification.object_type == Settings.enum.approval_request %>
-    <%= link_to notification.title, approve_request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"}%>
-    <span> <%= notification.created_at.strftime("%d %b. %Y") %></span>
+<% if notification.object_type == Settings.enum.report %>
+  <%= link_to report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: "dropdown-item"} do %>
+    <i class="fas fa-feather-alt mr-2"></i><%= notification.title %>
+    <span class="float-right text-muted text-sm"><%= l(notification.created_at, format: :short) %></span>
   <% end %>
-</li>
+ <% elsif notification.object_type == Settings.enum.request %>
+  <%= link_to request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: "dropdown-item"} do %>
+    <i class="fas fa-check-square mr-2"></i><%= notification.title %>
+    <span class="float-right text-muted text-sm"><%= l(notification.created_at, format: :short) %></span>
+  <% end %>
+<% elsif notification.object_type == Settings.enum.approval_request %>
+  <%= link_to approve_request_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: "dropdown-item"} do %>
+    <i class="fas mr-2"></i><%= notification.title %>
+    <span class="float-right text-muted text-sm"><%= l(notification.created_at, format: :short) %></span>
+  <% end %>
+<% end %>
+<div class="dropdown-divider"></div>

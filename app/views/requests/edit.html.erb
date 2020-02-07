@@ -1,0 +1,9 @@
+<% provide(:title, t(".begin_title")) %>
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <%= render partial: "shared/head_profile", locals: {path1: requests_path, title: "Edit Request", link1: "Requests", link2: "Edit request"}%>
+
+  <!-- Main content -->
+  <%= render partial: "requests/form", locals: {division: @request, path: request_path}%>
+  <!-- /.content -->
+</div>

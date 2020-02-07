@@ -1,0 +1,38 @@
+<div class="content-wrapper">
+  <%= render partial: "shared/head_profile", locals: {path1: profile_path(current_user), title: "Profile", link1: current_user.name , link2: "Active"}%>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <%= render partial: "shared/profile" %>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-header p-2">
+              <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <%= link_to "Notifications", profiles_path, class: "nav-link active" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Update Profile", edit_profile_path(current_user), class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Reset Password", edit_reset_password_path(current_user), class: "nav-link" %>
+                </li>
+              </ul>
+            </div><!-- /.card-header -->
+
+            <%= render partial: "profiles/notification", collection: @notifications %>
+            <div class="container"><%= will_paginate @notifications %></div>
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

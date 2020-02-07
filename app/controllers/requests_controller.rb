@@ -2,8 +2,16 @@ class RequestsController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @requests = current_user.requests.paginate(page: params[:page],
+    if params[:type].blank? && params[:q].blank?
+      @requests = current_user.requests.paginate(page: params[:page],
                                     per_page: Settings.requests.per_page)
+    elsif params[:type] && params[:q].blank?
+      @requests = current_user.requests.search_type(params[:type]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+    elsif params[:type].blank? && params[:q]
+      @requests = current_user.requests.joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+    else
+      @requests = current_user.requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+    end
   end
 
   def show
@@ -24,24 +32,44 @@ class RequestsController < ApplicationController
   end
 
   def new
-    @request = current_user.requests.build
+    @request = current_user.requests.new
   end
 
   def create
-    @request = current_user.requests.build request_params
-    if current_user.manager?
-      if current_division.parent_id.blank?
+    @request = current_user.requests.new request_params
+    if params[:request][:time_from] > params[:request][:time_to] ||  params[:request][:time_to] > Time.now
+      @request.errors.add(:time_from, "Start time and End time can vailid!")
+      render :new
+    else
+      if current_user.manager?
+        if current_division.parent_id.blank?
         flash.now[:success] = t ".highest_division"
         render :new
+        else
+          save_approval_request current_division.parent
+        end
+      elsif current_user.member?
+        save_approval_request current_division
       else
-        save_approval_request current_division.parent
+        flash.now[:failure] = t ".create_fault"
+        render :new
       end
-    elsif current_user.member?
-      save_approval_request current_division
-    else
-      flash.now[:success] = t ".create_fault"
-      render :new
     end
+  end
+
+  def edit
+    @request = current_user.requests.find_by id: params[:id]
+  end
+
+  def update
+     @request = current_user.requests.find_by id: params[:id]
+     if @request.update(request_params)
+        flash[:success] = "Update sucsses"
+        redirect_to requests_path
+     else
+        flash.now[:failure] = "Update failure"
+        render :edit
+     end
   end
 
   def destroy
@@ -51,11 +79,11 @@ class RequestsController < ApplicationController
         flash[:success] = t ".post_destroy"
         redirect_to requests_path
       else
-        flash[:success] = t ".destroy_fault"
+        flash[:failure] = t ".destroy_fault"
         redirect_to errors_path
       end
     else
-      flash[:success] = t ".load_error"
+      flash[:error] = t ".load_error"
       redirect_to requests_path
     end
   end
@@ -76,7 +104,7 @@ class RequestsController < ApplicationController
       flash[:success] = t ".create_request"
       redirect_to requests_path
     rescue ActiveRecord::RecordInvalid
-      flash.now[:success] = t ".create_fault"
+      flash.now[:failure] = t ".create_fault"
       render :new
     end
   end

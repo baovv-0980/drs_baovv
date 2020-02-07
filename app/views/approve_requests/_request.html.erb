@@ -1,7 +1,0 @@
-<tr>
-  <td><%= i + 1 %></td>
-  <td><%= request.id %></td>
-  <td><%= l(request.created_at, format: :short) %></td>
-  <td><%= request.status %></td>
-  <td><%= link_to t(".show"), approve_request_path(request.id), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} %></td>
-</tr>

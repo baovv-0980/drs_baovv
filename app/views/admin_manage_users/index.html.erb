@@ -1,51 +1,50 @@
 <% provide(:title, t(".begin_title")) %>
 <div class="content-wrapper">
+  <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage User", link1: "", link2: ""}%>
   <section class="content">
-    <div id="my_container">
-      <div class="col-12">
-        <div class="create">
-          <%= link_to "Create new a user", new_admin_manage_user_path, class: "btn btn-primary" %>
-        </div>
-        <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"><b>Manage User</b></h3>
-              <% if @users.blank? %>
-                <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
-              <% end %>
-              <div class="card-tools">
-                <%= form_tag admin_manage_users_path, class: "form-inline", method: :get do %>
-                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
-                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
-                    <i class="fas fa-search"></i>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive p-0" style="height: 300px;">
-              <table class="table table-head-fixed text-nowrap table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Birthday</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Staff Type</th>
-                    <th scope="col">Work Space</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= render partial: "user", collection: @users %>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <%= will_paginate @users %>
+    <div class="col-12">
+      <div class="create">
+        <%= link_to "Create new a user", new_admin_manage_user_path, class: "btn btn-primary" %>
       </div>
+      <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><b>Manage User</b></h3>
+            <% if @users.blank? %>
+              <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+            <% end %>
+            <div class="card-tools">
+              <%= form_tag admin_manage_users_path, class: "form-inline", method: :get do %>
+                <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                  <i class="fas fa-search"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Birthday</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Staff Type</th>
+                  <th scope="col">Work Space</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "shared/user", collection: @users, locals: {type_show: true} %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+      </div>
+      <%= will_paginate @users %>
     </div>
   </section>
   <!-- /.content -->

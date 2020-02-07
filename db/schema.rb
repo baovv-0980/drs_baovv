@@ -57,7 +57,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_171721) do
 
   create_table "requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "request_type", default: 0
-    t.datetime "time"
+    t.datetime "time_from"
+    t.datetime "time_to"
     t.text "reason"
     t.integer "status", default: 0
     t.bigint "user_id"

@@ -22,7 +22,6 @@ li.nav-item.dropdown {
 }
 
 #my_container{
-  padding: 2% 4%;
   background: $bg-empty;
 }
 
@@ -37,4 +36,17 @@ li.nav-item.dropdown {
 
 input#user_birthday {
     margin: 0;
+}
+
+.modal-dialog-centered {
+    margin: auto;
+    width: fit-content;
+}
+
+.dropdown-menu.dropdown-menu-lg.dropdown-menu-right.show {
+    width: 250px;
+}
+
+.post .user-block{
+  margin-bottom: 0px;
 }

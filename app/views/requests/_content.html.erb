@@ -1,6 +1,59 @@
-<small><%= t ".dialog_time", request_type: @request.request_type %></small>
-<p><%= l(@request.time, format: :short) %></p>
-<small><%= t ".dialog_status" %></small>
-<p><%= @request.status %></p>
-<small><%= t ".dialog_reason" %></small>
-<p><%= @request.reason %></p>
+<div class="card-primary">
+  <div class="card-header">
+    <h3 class="card-title"><strong>Request</strong></h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <strong></i>Staff code</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= "RQ#{@request.id}" %></span>
+    </p>
+    <hr>
+    <strong></i>Staff name</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.user.name %></span>
+    </p>
+    <hr>
+    <strong></i>Email</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.user.email %></span>
+    </p>
+    <hr>
+    <strong></i>Position</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.user.position %></span>
+    </p>
+    <hr>
+    <strong></i>Workspace</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.user.workspace %></span>
+    </p>
+    <hr>
+    <strong></i>Kind</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.request_type %></span>
+    </p>
+    <hr>
+    <strong>Time Of Creation</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= l(@request.created_at, format: :short) %></span>
+    </p>
+    <hr>
+    <strong>Time Request</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= "#{l(@request.time_from, format: :short)} - #{l(@request.time_to, format: :short)}" %></span>
+    </p>
+    <hr>
+    <strong></i>Reason</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.reason %></span>
+    </p>
+    <hr>
+    <strong>Status</strong>
+    <p class="text-muted">
+      <span class="tag tag-danger"><%= @request.status  %></span>
+    </p>
+  </div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->

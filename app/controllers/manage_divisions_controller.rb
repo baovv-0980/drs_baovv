@@ -4,11 +4,23 @@ class ManageDivisionsController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @divisions = Division.all.paginate(page: params[:page], per_page: Settings.requests.per_page)
+    if params[:q].blank?
+      @divisions = Division.all.paginate(page: params[:page], per_page: Settings.requests.per_page)
+    else
+      @divisions = Division.search_division(params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    end
   end
 
   def show
-    @division = Division.find_by id: params[:id]
+    if params[:q].blank?
+      @users = Division.find_by(id: params[:id]).users.paginate(page: params[:page], per_page: Settings.users.per_page)
+    else
+      @users = Division.find_by(id: params[:id]).users.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.users.per_page)
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -57,8 +69,9 @@ class ManageDivisionsController < ApplicationController
 
   def correct_division
     @division = Division.find_by id: params[:id]
+    return if @division
     flash[:success] = t "admin_manage_users.not_exits"
-    redirect_to root_path if @division.blank?
+    redirect_to root_path
   end
 
   def division_params
