@@ -11,7 +11,8 @@ en:
       title: Daily Reports System
       reports: Reports
       requests: Requests
-      manage_requests: Manage Requests
+      manage_request: Manage Request
+      manage_division: Manage Division
       notifi: Notifications
       notifi_item1: Notifications 1
       notifi_item2: Notifications 2
@@ -32,3 +33,11 @@ en:
   enum_status_type:
     lated: Lated
     leaved: Leaved
+  shared:
+    user:
+      add_sure: Are you sure you add this member from this division!
+      delete_sure: Are you sure you delete this member from this division!
+  manager:
+    not_exits: Manager not exits
+  member:
+    not_exits: Member not exits

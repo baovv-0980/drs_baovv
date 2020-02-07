@@ -22,7 +22,7 @@ class ApproveRequestsController < ApplicationController
       flash[:success] = t ".update"
       redirect_to approve_requests_path
     rescue ActiveRecord::RecordInvalid
-      flash[:success] = t ".update_fault"
+      flash[:failure] = t ".update_fault"
       render :index
     end
   end

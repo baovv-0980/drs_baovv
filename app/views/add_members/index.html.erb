@@ -1,0 +1,32 @@
+<div class="container">
+  <h1 class="title text-center"><%= t ".title" %></h1>
+  <div class="form-group center">
+     <%= form_tag add_members_path, method: :get do %>
+      <%= text_field_tag :q %>
+      <%= submit_tag t(".search") %>
+    <% end %>
+  </div>
+  <div id="create-control">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col"><%= t ".number" %></th>
+          <th scope="col"><%= t ".user_id" %></th>
+          <th scope="col"><%= t ".division" %></th>
+          <th scope="col"><%= t ".user_name" %></th>
+          <th scope="col"><%= t ".user_email" %></th>
+          <th scope="col"><%= t ".user_phone" %></th>
+          <th scope="col"><%= t ".user_birthday" %></th>
+          <th scope="col"><%= t ".user_skill" %></th>
+          <th scope="col"><%= t ".action" %></th>
+        </tr>
+        <tbody>
+          <%= render partial: "shared/user", collection: @users %>
+        </tbody>
+      </thead>
+    </table>
+  </div>
+  <% if @users.blank? %>
+    <h1 class="text-center"><%= t ".no_data" %></h1>
+  <% end %>
+</div>
