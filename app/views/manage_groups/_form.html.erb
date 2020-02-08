@@ -1,0 +1,59 @@
+ <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="settings">
+                  <%= form_for(@group, url: path, class: "form-horizontal") do |f|%>
+                    <%= render "shared/error_messages", object: f.object %>
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :name, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_field :name, class: "form-control", placeholder:"Group" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <%= f.label :division_id, class: "col-sm-2 col-form-label" %>
+                      <div class="col-sm-4">
+                        <%= f.select :division_id, division_group_select.collect {|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-2">
+                        <%= f.label :description, class: "col-form-label" %>
+                      </div>
+                      <div class="col-sm-10">
+                        <%= f.text_area :description, class: "form-control", placeholder:"Description" %>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <%= f.submit "Submit", class: "btn btn-primary" %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>

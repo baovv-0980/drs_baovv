@@ -1,0 +1,51 @@
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <b>DAILY REPORT</b>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Change your password</p>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <%= f.hidden_field :reset_password_token %>
+
+            <div class="row container">
+              <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+              <% end %>
+            </div>
+          <div class="input-group mb-3">
+            <%= f.password_field :password,{class: "form-control", placeholder: "Password", autofocus: true, autocomplete: "new-password"} %>
+          <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <%= f.password_field :password_confirmation,{class: "form-control", placeholder: "Password", autocomplete: "new-password"} %>
+          <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="actions">
+              <%= f.submit "Change my password", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+        <hr>
+        <p class="mb-1 float-right">
+          <%= render "devise/shared/links" %>
+        </p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+</div>

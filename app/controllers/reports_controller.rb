@@ -2,28 +2,27 @@ class ReportsController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @reports = current_user.reports.paginate(page: params[:page],
-                                    per_page: Settings.reports.per_page)
+    # @reports = current_user.reports.paginate(page: params[:page],
+    #                                 per_page: Settings.reports.per_page)
+    @reports = current_user.reports.where(group_id: 1).paginate(page: params[:page],
+                                      per_page: Settings.reports.per_page)
+    @group_id = 1
   end
 
   def new
-    @report = current_user.reports.build
+    @report = current_user.reports.new
   end
 
   def show
-    if params[:type] == Settings.notifi
-      @report = Report.find_by id: params[:id]
-    elsif params[:type] == Settings.reports.report
-      @report = current_user.reports.find_by id: params[:id]
-    elsif params[:type] == Settings.reports.user_report
-      @user = User.find_by id: params[:user_id]
-      @report = @user.reports.find_by id: params[:id]
+    if params[:q].blank?
+      @reports = current_user.reports.where(group_id: params[:id]).paginate(page: params[:page],
+                                      per_page: Settings.reports.per_page)
+
     else
-      flash[:success] = t ".error"
-      redirect_to errors_path
+      @reports = current_user.reports.where(group_id: params[:id]).search_reports(params[:q]).paginate(page: params[:page],
+                                      per_page: Settings.reports.per_page)
     end
-    flash.now[:success] = t ".not_found"
-    render :index if @report.blank?
+     @group_id = params[:id]
     respond_to do |format|
       format.html
       format.js
@@ -31,10 +30,10 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = current_user.reports.build report_params
+    @report = current_user.reports.new report_params
     ActiveRecord::Base.transaction do
       @report.save!
-      send_notification @report
+      # send_notification @report
       flash[:success] = t ".create_success"
       redirect_to reports_path
     rescue ActiveRecord::RecordInvalid

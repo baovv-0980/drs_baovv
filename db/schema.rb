@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_171721) do
+ActiveRecord::Schema.define(version: 2020_02_10_090225) do
 
   create_table "approval_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 0
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 2020_01_30_171721) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.bigint "division_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["division_id"], name: "index_groups_on_division_id"
+  end
+
   create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.integer "object_id"
@@ -44,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_171721) do
 
   create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
+    t.integer "group_id"
     t.text "plan"
     t.text "actual"
     t.text "next_plan"
@@ -68,6 +78,16 @@ ActiveRecord::Schema.define(version: 2020_01_30_171721) do
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
+  create_table "user_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "group_id"
+    t.integer "role", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_user_groups_on_group_id"
+    t.index ["user_id"], name: "index_user_groups_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email"
     t.string "name"
@@ -85,11 +105,21 @@ ActiveRecord::Schema.define(version: 2020_01_30_171721) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "remember_digest"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "remember_token"
     t.index ["division_id"], name: "index_users_on_division_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "approval_requests", "divisions"
+  add_foreign_key "groups", "divisions"
   add_foreign_key "reports", "users"
   add_foreign_key "requests", "users"
+  add_foreign_key "user_groups", "groups"
+  add_foreign_key "user_groups", "users"
   add_foreign_key "users", "divisions"
 end

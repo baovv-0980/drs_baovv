@@ -1,0 +1,41 @@
+<% if user_group_select(@user).blank? %>
+  <div class="card-body">
+    <div class="active tab-pane text-center" id="settings">
+      <h1>No Project Add</h1>
+    </div>
+  </div>
+<% else %>
+  <div class="card-body">
+    <div class="active tab-pane" id="settings">
+      <%= form_for(@user_group, url: add_members_path, class: "form-horizontal") do |f|%>
+        <%= render "shared/error_messages", object: f.object %>
+        <div class="form-group row">
+          <%= f.label :user_id, class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-9">
+            <%= f.text_field :user_id, {class: "form-control",readonly:"readonly", value: @user.name} %>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <%= f.hidden_field :user_id, {class: "form-control",readonly:"readonly", value: @user.id}  %>
+        </div>
+        <div class="form-group row">
+          <%= f.label :group_id, class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-9">
+            <%= f.select :group_id, user_group_select(@user).collect {|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :role, class: "col-sm-3 col-form-label" %>
+           <div class="col-sm-9">
+            <%= f.select :role, role_group_select, {} , {class: "form-control custom-select" }  %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-sm-5 col-sm-10">
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div><!-- /.card-body -->
+<% end %>

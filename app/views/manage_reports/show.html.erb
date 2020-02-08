@@ -1,31 +1,62 @@
-<% provide(:title, t(".begin_title")) %>
-<div class="container">
-  <h1 class="title text-center"><%= t ".title" %></h1>
-  <div class="form-group">
-    <%= form_tag manage_report_path, method: :get do %>
-      <%= text_field_tag "search[date_form]", @search.date_form %>
-      <%= text_field_tag "search[date_to]", @search.date_to %>
-      <%= submit_tag "search" %>
-    <% end %>
-  </div>
-  <div id="create-control">
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= t ".report_id" %></th>
-          <th scope="col"><%= t ".report_title" %></th>
-          <th scope="col"><%= t ".report_time" %></th>
-          <th scope="col"><%= t ".report_action" %></th>
-        </tr>
-        <tbody>
-          <%= will_paginate @reports %>
-          <%= render @reports %>
-        </tbody>
-      </thead>
-    </table>
-    <% if @reports.blank? %>
-      <h1 class="text-center"><%= t ".no_data" %></h1>
-    <% end %>
-  </div>
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage Report", link1: "", link2: ""}%>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-1"></div>
+        <!-- /.col -->
+        <div id="tbody_report" class="col-md-10">
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title"><b>Manage User</b></h3>
+              <% if @reports.blank? %>
+                <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+              <% end %>
+              <div class="card-tools row">
+                <%= form_tag manage_report_path, {class: "form-inline", method: :get} do %>
+                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                    <i class="fas fa-search"></i>
+                  <% end %>
+                <% end %>
+                 <div class="col-3">
+
+                <%= form_tag manage_report_path, class: "form-inline", method: :get do %>
+                  <%= select_tag :date, raw(date_select.collect {|i| "<option>#{i[0]}</option>"}),{include_blank: "Choose date", class: "form-control select", onchange: "this.form.submit()"} %>
+                <% end %>
+              </div>
+              </div>
+            </div>
+
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+              <table class="table table-head-fixed table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Plan</th>
+                    <th scope="col">Actual</th>
+                    <th scope="col">Next Plan</th>
+                    <th scope="col">Issue</th>
+                    <th scope="col">Time Request</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= render partial: "reports/report", collection: @reports, locals: {type_user: 1} %>
+                </tbody>
+              </table>
+            </div>
+            <%= will_paginate @reports %>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-1"></div>
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
 </div>

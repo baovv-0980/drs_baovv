@@ -1,0 +1,48 @@
+<% provide(:title, t(".begin_title")) %>
+<div class="content-wrapper">
+  <%= render partial: "shared/head_profile", locals: {path1: manage_groups_path, title: "Manage Member - #{@group.name}", link1: "Manage Group", link2: "Member"}%>
+  <section class="content">
+    <div class="col-12">
+      <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><b><%= @group.name %></b></h3>
+            <% if @users.blank? %>
+              <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
+            <% end %>
+            <div class="card-tools">
+              <%= form_tag manage_member_path(@group), class: "form-inline", method: :get do %>
+                <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
+                <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                  <i class="fas fa-search"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Birthday</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Staff Type</th>
+                  <th scope="col">Work Space</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "shared/user", collection: @users, locals: {type_user: 2, group_id: @group.id} %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+      </div>
+      <%= will_paginate @users %>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>

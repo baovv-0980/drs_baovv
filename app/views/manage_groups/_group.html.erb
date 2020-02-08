@@ -1,0 +1,23 @@
+<tr>
+  <td><%= group_counter + 1 %></td>
+  <td><%= group.name %></td>
+  <td><%= group.division.name %></td>
+  <td><%= group.description %></td>
+  <td>
+    <%= link_to manage_group_path(group),{class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+      <i class="nav-icon far fa-eye"></i>
+    <% end %>
+    <%= link_to edit_manage_group_path(group),class: "my_icon" do %>
+      <i class="nav-icon far fa-edit"></i>
+    <% end %>
+    <%= link_to manage_group_path(group), {class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")}} do %>
+       <i class="nav-icon far fa-trash-alt"></i>
+    <% end %>
+    <%= link_to manage_member_path(group),class: "my_icon" do %>
+      <i class="nav-icon far fa-user"></i>
+    <% end %>
+    <%= link_to manage_report_path(group),class: "my_icon" do %>
+      <i class="nav-icon far fa-calendar"></i>
+    <% end %>
+  </td>
+</tr>

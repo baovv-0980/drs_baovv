@@ -1,19 +1,32 @@
 class AddMembersController < ApplicationController
   before_action :manager_user
-  before_action :correct_user, only: [:update]
   before_action :logged_in_user
 
   def index
-    @users = User.add(params[:t], params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
+    if params[:q].blank?
+      @users = User.all.paginate(page: params[:page], per_page: Settings.users.per_page)
+    else
+      @users = User.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.users.per_page)
+    end
   end
 
-  def update
-    if @user.update(division_id: current_division.id)
-      flash[:success] = t ".update"
-      redirect_to manage_members_path
+  def show
+    @user = User.find_by id: params[:id]
+    @user_group = UserGroup.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def create
+     @user_group = UserGroup.new user_group_params
+    if @user_group.save
+      flash[:success] = "Add Member to Group Success"
+      redirect_to add_members_path
     else
-      flash[:success] = t ".update_fault"
-      render :index
+      flash[:failure] = "Add Member to Group Failure"
+      redirect_to errors_path
     end
   end
 
@@ -23,11 +36,7 @@ class AddMembersController < ApplicationController
     redirect_to root_path unless current_user.manager?
   end
 
-  def correct_user
-    @user = User.find_by id: params[:id]
-    return if @user
-
-    flash[:success] = t "member.not_exits"
-    redirect_to root_path
+  def user_group_params
+    params.require(:user_group).permit UserGroup::PARAMS
   end
 end
