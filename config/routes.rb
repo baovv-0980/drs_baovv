@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :reports, except: [:edit, :update, :destroy]
   resources :requests
   resources :approve_requests, only: [:index, :show, :update]
-  resources :manage_members, only: [:index, :update]
-  resources :add_members, only: [:index, :update]
+  resources :manage_members
+  resources :add_members, only: [:index, :create, :show]
   resources :admin_manage_users
   resources :errors, only: [:index]
   resources :manage_divisions
@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   resources :manager_show_reports, only: [:index]
   resources :reset_passwords, only: [:edit, :update]
   resources :notifications, only: [:index, :show]
+  resources :manage_groups
   mount ActionCable.server => "/cable"
 end

@@ -1,19 +1,16 @@
 <% provide(:title, t(".begin_title")) %>
 <div class="content-wrapper">
-  <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage User", link1: "", link2: ""}%>
+  <%= render partial: "shared/head_profile", locals: {path1: manage_groups_path, title: "Manage Member - #{@group.name}", link1: "Manage Group", link2: "Member"}%>
   <section class="content">
     <div class="col-12">
-      <div class="create">
-        <%= link_to "Create new a user", new_admin_manage_user_path, class: "btn btn-primary" %>
-      </div>
       <div class="card">
           <div class="card-header">
-            <h3 class="card-title"><b>Manage User</b></h3>
+            <h3 class="card-title"><b><%= @group.name %></b></h3>
             <% if @users.blank? %>
               <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
             <% end %>
             <div class="card-tools">
-              <%= form_tag admin_manage_users_path, class: "form-inline", method: :get do %>
+              <%= form_tag manage_member_path(@group), class: "form-inline", method: :get do %>
                 <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
                 <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
                   <i class="fas fa-search"></i>
@@ -38,7 +35,7 @@
                 </tr>
               </thead>
               <tbody>
-                <%= render partial: "shared/user", collection: @users, locals: {type_user: 1} %>
+                <%= render partial: "shared/user", collection: @users, locals: {type_user: 2, group_id: @group.id} %>
               </tbody>
             </table>
           </div>

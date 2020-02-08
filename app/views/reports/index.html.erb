@@ -1,29 +1,39 @@
-<% provide(:title, t(".begin_title")) %>
-<div class="container">
-  <h1 class="title text-center"><%= t ".title" %></h1>
-  <div id="create-control">
-    <% unless current_user.manager? %>
-      <div class="create">
-        <%= link_to t(".create_btn"), new_report_path, class: "btn btn-primary" %>
-      </div>
-    <% end %>
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col"><%= t ".number" %></th>
-          <th scope="col"><%= t ".report_id" %></th>
-          <th scope="col"><%= t ".report_title" %></th>
-          <th scope="col"><%= t ".report_time" %></th>
-          <th scope="col"><%= t ".report_action" %></th>
-        </tr>
-        <tbody>
-          <%= will_paginate @reports %>
-          <%= render @reports %>
-        </tbody>
-      </thead>
-    </table>
-    <% if @reports.blank? %>
-      <h1 class="text-center"><%= t ".no_data" %></h1>
-    <% end %>
-  </div>
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage Report", link1: "", link2: ""}%>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <%= link_to "Create a Report", new_report_path, class: "btn btn-primary btn-block mb-3" %>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">List Group</h3>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav nav-pills flex-column">
+                <% my_group_select.each_with_index do |group, i| %>
+                  <li class="nav-item active">
+                    <%= link_to report_path(group), {class: "nav-link", remote: true} do %>
+                      <span class="badge bg-primary"><%= i + 1%></span>
+                      <%= group.name %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+        <div id="tbody_report" class="col-md-9">
+            <%= render partial: "reports/content" %>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
 </div>

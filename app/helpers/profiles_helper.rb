@@ -38,6 +38,42 @@ module ProfilesHelper
     Division.all.select{|i| i if(i != division)}
   end
 
+  def division_group_select
+    Division.all.map{|i| i}
+  end
+
+  def group_select
+     Group.all.map{|i| i}
+  end
+
+  def role_group_select
+    UserGroup.roles.keys.map{|i| i}
+  end
+
+  def my_group_select
+    current_user.groups.map{|i| i}
+  end
+
+  def user_group_select user
+    (Group.all - user.groups).select{|i| i}
+  end
+  # ARRAY = []
+  # def index
+  #   dequy(current_division.children.ids)
+  # end
+
+  # def dequy param
+  #   param.each do |i|
+  #     division = Division.find(i);
+  #     ARRAY.push(division)
+  #     if division.blank?
+  #       return ARRAY
+  #     else
+  #       dequy(division.children.ids)
+  #     end
+  #   end
+  # end
+
   def staff_type_select
     User.staff_types.keys.map{|i| i}
   end

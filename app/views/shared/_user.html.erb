@@ -7,21 +7,29 @@
   <td><%= user.phone %></td>
   <td><%= user.staff_type %></td>
   <td><%= user.workspace %></td>
-  <% unless user.admin? %>
-    <td>
-      <%= link_to admin_manage_user_path(user.id), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
-       <i class="nav-icon far fa-eye"></i>
-      <% end %>
+  <td>
+    <%= link_to admin_manage_user_path(user.id), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+     <i class="nav-icon far fa-eye"></i>
+    <% end %>
+
+    <% if type_user == 1 %>
       <%= link_to edit_admin_manage_user_path(user), class: "my_icon", method: :get do %>
         <i class="nav-icon far fa-edit"></i>
       <% end %>
-      <% if type_show %>
+
+      <% unless user.admin? %>
         <%= link_to admin_manage_user_path(user), class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")} do %>
           <i class="nav-icon far fa-trash-alt"></i>
         <% end %>
       <% end %>
-    </td>
-  <% else %>
-    <td></td>
-  <% end %>
+    <% elsif type_user == 2 %>
+      <%= link_to manage_member_path(user_id: user, group_id: group_id), class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")} do %>
+        <i class="nav-icon far fa-trash-alt"></i>
+      <% end %>
+    <% else %>
+      <%= link_to add_member_path(user), {class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
+        <i class="nav-icon far fa-plus-square"></i>
+      <% end %>
+    <% end %>
+  </td>
 </tr>

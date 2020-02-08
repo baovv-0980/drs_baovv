@@ -81,6 +81,31 @@
                     <p>Approve IL, LE, LO</p>
                   <% end %>
                 </li>
+                <li class="nav-item">
+                  <%= link_to manage_groups_path, class: "nav-link" do %>
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Group</p>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview">
+            <%= link_to "#", class: "nav-link" do %>
+              <% unless current_user.admin? %>
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>Your Report<i class="fas fa-angle-left right"></i></p>
+              <% end %>
+            <% end %>
+            <ul class="nav nav-treeview">
+              <% unless current_user.admin? %>
+                <li class="nav-item">
+                  <%= link_to reports_path, class: "nav-link" do %>
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Daily Reports</p>
+                  <% end %>
+                </li>
               <% end %>
             </ul>
           </li>
