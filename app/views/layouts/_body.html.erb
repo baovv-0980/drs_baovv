@@ -34,31 +34,47 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <%= link_to "#", class: "nav-link" do %>
-              <% if current_user.admin? %>
-                <i class="nav-icon fas fa-tasks"></i>
-                <p>Manage request<i class="fas fa-angle-left right"></i></p>
-              <% elsif current_user.member? %>
-                <i class="nav-icon fas fa-tasks"></i>
-                <p>Personal request<i class="fas fa-angle-left right"></i></p>
-              <% elsif current_user.manager? %>
-                <i class="nav-icon fas fa-tasks"></i>
-                <p>Manager request<i class="fas fa-angle-left right"></i></p>
+
+          <% if current_user.manager? %>
+            <li class="nav-item">
+             <%= link_to manage_groups_path, class: "nav-link" do %>
+                 <i class="nav-icon fas fa-tasks"></i>
+                <p>Manage Project Teams</p>
               <% end %>
-            <% end %>
+            </li>
+          <% end %>
+
+          <li class="nav-item has-treeview">
+
+              <% if current_user.admin? %>
+                <%= link_to "#", class: "nav-link" do %>
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>Manage Internal <i class="fas fa-angle-left right"></i></p>
+                <% end %>
+              <% elsif current_user.member? %>
+                <%= link_to "#", class: "nav-link" do %>
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>Personal request<i class="fas fa-angle-left right"></i></p>
+                <% end %>
+              <% elsif current_user.manager? %>
+                <%= link_to "#", class: "nav-link" do %>
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>Manage Requests<i class="fas fa-angle-left right"></i></p>
+                <% end %>
+              <% end %>
+
             <ul class="nav nav-treeview">
               <% if current_user.admin? %>
                 <li class="nav-item">
                   <%= link_to admin_manage_users_path, class: "nav-link" do %>
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Manage User</p>
+                    <p>Manage Users</p>
                   <% end %>
                 </li>
                 <li class="nav-item">
                   <%= link_to manage_divisions_path, class: "nav-link" do %>
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Division</p>
+                    <p>Manage Divisions</p>
                   <% end %>
                 </li>
               <% elsif current_user.member? %>
@@ -76,59 +92,43 @@
                 </li>
               <% elsif current_user.manager? %>
                 <li class="nav-item">
-                  <%= link_to approve_requests_path, class: "nav-link" do %>
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Approve IL, LE, LO</p>
-                  <% end %>
-                </li>
-                <li class="nav-item">
-                  <%= link_to manage_groups_path, class: "nav-link" do %>
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Group</p>
-                  <% end %>
+                  <li class="nav-item">
+                    <%= link_to approve_requests_path, class: "nav-link" do %>
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Approve IL, LE, LO</p>
+                    <% end %>
+                  </li>
                 </li>
               <% end %>
             </ul>
           </li>
 
           <li class="nav-item has-treeview">
-            <%= link_to "#", class: "nav-link" do %>
-              <% unless current_user.admin? %>
+            <% unless current_user.manager? && current_division.parent_id.blank? %>
+              <%= link_to "#", class: "nav-link" do %>
                 <i class="nav-icon fas fa-tasks"></i>
-                <p>Your Report<i class="fas fa-angle-left right"></i></p>
+                <p>Personal Requests<i class="fas fa-angle-left right"></i></p>
               <% end %>
             <% end %>
             <ul class="nav nav-treeview">
-              <% unless current_user.admin? %>
+              <% unless current_user.manager? && current_division.parent_id.blank? %>
                 <li class="nav-item">
                   <%= link_to reports_path, class: "nav-link" do %>
                     <i class="far fa-circle nav-icon"></i>
                     <p>Daily Reports</p>
                   <% end %>
                 </li>
+                <% unless current_user.admin? %>
+                  <li class="nav-item">
+                    <%= link_to requests_path, class: "nav-link" do %>
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>IL, LE, LO</p>
+                    <% end %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           </li>
-
-          <li class="nav-header">EXAMPLES</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Calendar
-                <span class="badge badge-info right">2</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Gallery
-              </p>
-            </a>
-          </li>
-        </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>

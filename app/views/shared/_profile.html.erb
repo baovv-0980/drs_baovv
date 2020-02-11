@@ -4,9 +4,9 @@
   <div class="text-center">
     <%= image_tag("logos/img_user.png", class: "profile-user-img img-fluid img-circle") %>
   </div>
-  <h3 class="profile-username text-center"><%= current_user.name %></h3>
-  <% if(current_user.division) %>
-  <p class="text-muted text-center"><%= current_user.division.name %></p>
+  <h3 class="profile-username text-center"><%= user.name %></h3>
+  <% if(user.division) %>
+  <p class="text-muted text-center"><%= user.division.name %></p>
   <% else %>
   <p class="text-muted text-center">No Division</p>
   <% end %>
@@ -24,47 +24,47 @@
 <div class="card-body">
   <strong><i class="fas fa-envelope mr-1"></i>Email</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.email %></span>
+    <span class="tag tag-danger"><%= user.email %></span>
   </p>
   <hr>
   <strong><i class="fas fa-venus-mars mr-1"></i>Gender</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.gender %></span>
+    <span class="tag tag-danger"><%= user.gender %></span>
   </p>
   <hr>
   <strong><i class="fas fa-phone mr-1"></i>Phone</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.phone %></span>
+    <span class="tag tag-danger"><%= user.phone %></span>
   </p>
   <hr>
   <strong><i class="fas fa-birthday-cake mr-1"></i>Birthday</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.birthday %></span>
+    <span class="tag tag-danger"><%= user.birthday %></span>
   </p>
   <hr>
   <strong><i class="fas fa-flag mr-1"></i>Nationality</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.nationality %></span>
+    <span class="tag tag-danger"><%= user.nationality %></span>
   </p>
   <hr>
   <strong><i class="fas fa-home mr-1"></i>Workspace</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.workspace %></span>
+    <span class="tag tag-danger"><%= user.workspace %></span>
   </p>
   <hr>
   <strong><i class="fas fa-id-card mr-1"></i>Position</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.position %></span>
+    <span class="tag tag-danger"><%= user.position %></span>
   </p>
   <hr>
   <strong><i class="fas fa-address-card mr-1"></i>Staff Type</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.staff_type %></span>
+    <span class="tag tag-danger"><%= user.staff_type %></span>
   </p>
   <hr>
   <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
   <p class="text-muted">
-    <span class="tag tag-danger"><%= current_user.skill %></span>
+    <span class="tag tag-danger"><%= user.skill %></span>
   </p>
 </div>
 <!-- /.card-body -->

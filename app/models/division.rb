@@ -7,6 +7,7 @@ class Division < ApplicationRecord
   has_many :reports, through: :users
   belongs_to :parent, class_name: Division.name, optional: true
   has_many :childrens, class_name: Division.name, foreign_key: :parent_id
+  has_many :groups
 
   validates :name, presence: true,
              length: {maximum: Settings.divisions.name_max}

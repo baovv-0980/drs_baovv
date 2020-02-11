@@ -1,7 +1,7 @@
 Division.create!(name: "SUN")
 
 User.create!(name:  "van Viet Bao",
-               email: "bao2@gmail.com",
+               email: "bao0@gmail.com",
                password: "123456",
                password_confirmation: "123456",
                birthday: Time.zone.now,

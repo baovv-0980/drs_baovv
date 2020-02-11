@@ -2,8 +2,7 @@ module SessionHelper
   def current_division
     @current_division = current_user.division
   end
-
-  def notification
-    @notifications = current_user.notifications.all.reverse if current_user.present?
+  def manage_report
+    current_user.user_groups.where(role: "manager")
   end
 end

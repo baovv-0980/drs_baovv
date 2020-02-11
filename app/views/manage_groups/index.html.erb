@@ -1,15 +1,15 @@
 <% provide(:title, t(".begin_title")) %>
 <div class="content-wrapper">
-  <%= render partial: "shared/head_profile", locals: {path1: nil, title: "Manage Group", link1: "", link2: nil}%>
+  <%= render partial: "shared/head_profile", locals: {path1: nil, title: "Manage Group Project", link1: "", link2: nil}%>
   <section class="content">
     <div id="my_container">
       <div class="col-12">
         <div class="row">
           <div class="create col-sm-3">
-          <%= link_to "+ Create new a Group", new_manage_group_path, class: "btn btn-primary" %>
+          <%= link_to "+ Create Group Project", new_manage_group_path, class: "btn btn-primary" %>
         </div>
          <div class="create col-sm-3">
-          <%= link_to "+ Add Member to Group", add_members_path, class: "btn btn-primary" %>
+          <%= link_to "+ Add Member to Group Project", add_members_path, class: "btn btn-primary" %>
         </div>
         </div>
         <div class="card">
@@ -19,9 +19,9 @@
                 <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
               <% end %>
               <div class="card-tools">
-                <%= form_tag manage_groups_path, class: "form-inline", method: :get do %>
-                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
-                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+                <%= search_form_for @q, url: manage_groups_path, class: "form-inline" do |f| %>
+                  <%= f.search_field :name_or_description_cont_any, class: "form-control mr-sm-2", placeholder: "Search" %>
+                  <%= f.submit class: "btn btn-outline-success my-2 my-sm-0" do %>
                     <i class="fas fa-search"></i>
                   <% end %>
                 <% end %>

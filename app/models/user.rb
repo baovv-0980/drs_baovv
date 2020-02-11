@@ -40,8 +40,6 @@ class User < ApplicationRecord
   validates :division_id, presence: true
   before_save :downcase_email
 
-  scope :search_user, ->(search) {where "name LIKE ? OR email LIKE ?","%#{search}%", "%#{search}%"}
-
   scope :division_empty, -> {where division_id: nil}
 
   private

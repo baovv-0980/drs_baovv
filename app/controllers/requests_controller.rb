@@ -1,17 +1,16 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
+  before_action :correct_request, only: [:show]
 
   def index
-    if params[:type].blank? && params[:q].blank?
-      @requests = current_user.requests.paginate(page: params[:page],
-                                    per_page: Settings.requests.per_page)
-    elsif params[:type] && params[:q].blank?
-      @requests = current_user.requests.search_type(params[:type]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-    elsif params[:type].blank? && params[:q]
-      @requests = current_user.requests.joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-    else
-      @requests = current_user.requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-    end
+    # @search = current_user.requests.ransack(params[:q])
+    @q = current_user.requests.include(:user).ransack(params[:q])
+    @requests = @q.result.paginate(page: params[:page],per_page: Settings.requests.per_page)
+  end
+
+  def search
+    index
+    render :index
   end
 
   def show
@@ -20,11 +19,9 @@ class RequestsController < ApplicationController
     elsif params[:type] == "request"
       @request = current_user.requests.find_by(id: params[:id])
     else
-      flash[:success] = t ".error"
+      flash[:error] = t ".error"
       redirect_to errors_path
     end
-    flash.now[:success] = t ".not_found"
-    render :index if @request.blank?
     respond_to do |format|
       format.html
       format.js
@@ -51,7 +48,7 @@ class RequestsController < ApplicationController
       elsif current_user.member?
         save_approval_request current_division
       else
-        flash.now[:failure] = t ".create_fault"
+        flash.now[:error] = t ".create_fault"
         render :new
       end
     end
@@ -90,6 +87,13 @@ class RequestsController < ApplicationController
 
   private
 
+  def correct_request
+    return if @request.present?
+
+    flash.now[:error] = "Request not found"
+    render :index
+  end
+
   def request_params
     params.require(:request).permit Request::PARAMS
   end
@@ -104,7 +108,7 @@ class RequestsController < ApplicationController
       flash[:success] = t ".create_request"
       redirect_to requests_path
     rescue ActiveRecord::RecordInvalid
-      flash.now[:failure] = t ".create_fault"
+      flash.now[:error] = t ".create_fault"
       render :new
     end
   end

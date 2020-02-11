@@ -1,0 +1,6 @@
+<li class="nav-item active">
+  <%= link_to group_path(group.id), {class: "nav-link", remote: true} do %>
+    <span class="badge bg-primary"><%= group.id %></span>
+    <%= group.name %>
+  <% end %>
+</li>

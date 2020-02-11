@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     post "/signin", to: "devise/sessions#create"
     delete "/signout", to: "devise/sessions#destroy"
   end
+  resources :groups, only: [:show]
   resources :reports, except: [:edit, :update, :destroy]
   resources :requests
   resources :approve_requests, only: [:index, :show, :update]
@@ -21,5 +22,6 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:edit, :update]
   resources :notifications, only: [:index, :show]
   resources :manage_groups
+  resources :group_reports, only: [:index, :show]
   mount ActionCable.server => "/cable"
 end

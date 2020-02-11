@@ -42,6 +42,22 @@ module ProfilesHelper
     Division.all.map{|i| i}
   end
 
+  def division_childrents_select
+    @division = []
+    dq(current_division)
+    @division
+  end
+
+  def dq(division)
+    if division.childrens.blank?
+      @division.push(division)
+    else
+      division.childrens.each do |i|
+        dq(i)
+      end
+    end
+  end
+
   def group_select
      Group.all.map{|i| i}
   end
@@ -54,9 +70,6 @@ module ProfilesHelper
     current_user.groups.map{|i| i}
   end
 
-  def user_group_select user
-    (Group.all - user.groups).select{|i| i}
-  end
   # ARRAY = []
   # def index
   #   dequy(current_division.children.ids)

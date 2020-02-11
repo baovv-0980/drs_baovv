@@ -1,7 +1,6 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <%= render partial: "shared/head_profile", locals: {path1: "", title: "Manage Report", link1: "", link2: ""}%>
-
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -14,14 +13,7 @@
             </div>
             <div class="card-body p-0">
               <ul class="nav nav-pills flex-column">
-                <% my_group_select.each_with_index do |group, i| %>
-                  <li class="nav-item active">
-                    <%= link_to report_path(group), {class: "nav-link", remote: true} do %>
-                      <span class="badge bg-primary"><%= i + 1%></span>
-                      <%= group.name %>
-                    <% end %>
-                  </li>
-                <% end %>
+                <%= render partial: "reports/group", collection: @groups %>
               </ul>
             </div>
             <!-- /.card-body -->
@@ -29,7 +21,7 @@
         </div>
         <!-- /.col -->
         <div id="tbody_report" class="col-md-9">
-            <%= render partial: "reports/content" %>
+          <%= render partial: "reports/content", locals: {path: reports_path, group: nil} %>
         </div>
     </div>
     <!-- /.row -->

@@ -14,11 +14,14 @@
                 <div class="active tab-pane" id="settings">
                   <%= form_for(@report, url: path, class: "form-horizontal") do |f|%>
                     <%= render "shared/error_messages", object: f.object %>
-
                     <div class="form-group row">
                       <%= f.label :group_id, class: "col-sm-2 col-form-label" %>
                       <div class="col-sm-10">
-                        <%= f.select :group_id, my_group_select.collect{|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
+                        <% if my_group_select.blank? %>
+                          <input class="form-control", readonly="readonly", value="Group-Project empty!"/>
+                        <% else %>
+                          <%= f.select :group_id, my_group_select.collect{|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
+                        <% end %>
                       </div>
                     </div>
 
@@ -68,9 +71,11 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="offset-sm-2 col-sm-10">
-                        <%= f.submit "Submit", class: "btn btn-danger" %>
-                      </div>
+                      <% if my_group_select.present? %>
+                        <div class="offset-sm-2 col-sm-10">
+                          <%= f.submit "Submit", class: "btn btn-danger" %>
+                        </div>
+                      <% end %>
                     </div>
                   <% end %>
                 </div>

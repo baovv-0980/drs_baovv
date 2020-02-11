@@ -1,0 +1,6 @@
+en:
+  manage_groups:
+    index:
+      begin_title: "Manage Group"
+    new:
+      begin_title: "Manage Group Project"

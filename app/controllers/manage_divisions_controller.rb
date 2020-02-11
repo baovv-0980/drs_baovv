@@ -4,11 +4,8 @@ class ManageDivisionsController < ApplicationController
   before_action :admin_user
 
   def index
-    if params[:q].blank?
-      @divisions = Division.all.paginate(page: params[:page], per_page: Settings.requests.per_page)
-    else
-      @divisions = Division.search_division(params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
-    end
+    @q = Division.ransack(params[:q])
+    @divisions = @q.result.paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def show
@@ -34,9 +31,10 @@ class ManageDivisionsController < ApplicationController
   def create
     @division = Division.new division_params
     if @division.save
-      flash[:info] = t ".create_success"
+      flash[:success] = t ".create_success"
       redirect_to manage_divisions_path
     else
+      flash.now[:error] = "Create division error"
       render :new
     end
   end
@@ -46,7 +44,7 @@ class ManageDivisionsController < ApplicationController
       flash[:success] = t ".update_success"
       redirect_to manage_divisions_path
     else
-      flash[:success] = t ".update_fault"
+      flash[:error] = t ".update_fault"
       redirect_to manage_divisions_path
     end
   end
@@ -56,7 +54,7 @@ class ManageDivisionsController < ApplicationController
       flash[:success] = t ".destroy_success"
       redirect_to request.referer || root_path
     else
-      flash[:success] = t ".destroy_fault"
+      flash[:error] = t ".destroy_fault"
       redirect_to manage_divisions_path
     end
   end
@@ -70,7 +68,7 @@ class ManageDivisionsController < ApplicationController
   def correct_division
     @division = Division.find_by id: params[:id]
     return if @division
-    flash[:success] = t "admin_manage_users.not_exits"
+    flash[:error] = t "admin_manage_users.not_exits"
     redirect_to root_path
   end
 

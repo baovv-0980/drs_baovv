@@ -10,17 +10,18 @@
               <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
             <% end %>
             <div class="card-tools row">
-              <div class="col-9">
-                <%= form_tag approve_requests_path, class: "form-inline", method: :get do %>
-                  <%= select_tag :type, raw(status_request_select),{include_blank: "Choose status", class: "form-control select"} %>
-                  <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
-                  <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+              <div>
+                <%= search_form_for @q, url: approve_requests_path, class: "form-inline", method: :get do |f| %>
+                  <%= f.date_field :created_at_gteq, class: "form-control select" %>
+                  <%= f.date_field :created_at_lteq, class: "form-control select" %>
+                  <%= f.search_field :division_name_or_request_reason_cont_any, class: "form-control mr-sm-2", placeholder: "Search" %>
+                  <%= f.submit class: "btn btn-outline-success my-2 my-sm-0" do %>
                     <i class="fas fa-search"></i>
                   <% end %>
                 <% end %>
               </div>
 
-              <div class="col-3">
+              <div style="margin-left: 50px;">
                 <%= form_tag approve_requests_path, class: "form-inline", method: :get do %>
                   <%= select_tag :date, raw(date_select.collect {|i| "<option>#{i[0]}</option>"}),{include_blank: "Choose date", class: "form-control select", onchange: "this.form.submit()"} %>
                 <% end %>

@@ -30,4 +30,8 @@ class ApplicationController < ActionController::Base
     {locale: I18n.locale}
   end
 
+  def notification
+    @notifications = current_user.notifications.reverse if current_user.present?
+  end
+
 end

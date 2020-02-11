@@ -4,11 +4,8 @@ class ManageGroupsController < ApplicationController
   before_action :manager_user
 
   def index
-    if params[:q].blank?
-      @groups = Group.all.paginate(page: params[:page], per_page: Settings.requests.per_page)
-    else
-      @groups = Group.search_group(params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
-    end
+    @q = Group.ransack(params[:q])
+    @groups = @q.result.paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def new
@@ -30,9 +27,10 @@ class ManageGroupsController < ApplicationController
   def create
     @group = Group.new group_params
     if @group.save
-      flash[:info] = t ".create_success"
+      flash[:success] = t ".create_success"
       redirect_to manage_groups_path
     else
+      flash[:error] = t ".create_success"
       render :new
     end
   end
@@ -42,7 +40,7 @@ class ManageGroupsController < ApplicationController
       flash[:success] = "Update Group Success"
       redirect_to manage_groups_path
     else
-      flash[:failure] = t "Update Group Failure"
+      flash[:error] = t "Update Group Failure"
       redirect_to root_path
     end
   end
@@ -52,7 +50,7 @@ class ManageGroupsController < ApplicationController
       flash[:success] = "Destroy Group Success"
       redirect_to manage_groups_path
     else
-      flash[:failure] = "Destroy Group Success"
+      flash[:error] = "Destroy Group Success"
       redirect_to root_path
     end
   end
@@ -60,13 +58,17 @@ class ManageGroupsController < ApplicationController
   private
 
   def manager_user
-    redirect_to root_path unless current_user.manager?
+    return if current_user.manager?
+
+    flash[:error] = "You can't Manager"
+    redirect_to root_path
   end
 
   def correct_group
     @group = Group.find_by id: params[:id]
     return if @group
-    flash[:empty] = t "admin_manage_users.not_exits"
+
+    flash[:error] = t "admin_manage_users.not_exits"
     redirect_to root_path
   end
 

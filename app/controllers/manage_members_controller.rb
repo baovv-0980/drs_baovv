@@ -4,11 +4,8 @@ class ManageMembersController < ApplicationController
 
   def show
     @group = Group.find_by id: params[:id]
-    if params[:q].blank?
-      @users = @group.users.paginate(page: params[:page], per_page: Settings.requests.per_page)
-    else
-      @users = @group.users.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.requests.per_page)
-    end
+    @q = @group.users.ransack(params[:q])
+    @users = @q.result.paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def destroy
@@ -16,7 +13,7 @@ class ManageMembersController < ApplicationController
     if @user_group.destroy
       redirect_to manage_member_path(params[:group_id])
     else
-      flash[:failure] = "Destroy user of group failure"
+      flash[:error] = "Destroy user of group failure"
       redirect_to root_path
     end
   end

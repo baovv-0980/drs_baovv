@@ -3,16 +3,14 @@ class AddMembersController < ApplicationController
   before_action :manager_user
 
   def index
-    if params[:q].blank?
-      @users = User.all.paginate(page: params[:page], per_page: Settings.users.per_page)
-    else
-      @users = User.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.users.per_page)
-    end
+    @q = User.ransack(params[:q])
+    @users = @q.result.paginate(page: params[:page], per_page: Settings.users.per_page)
   end
 
   def show
     @user = User.find_by id: params[:id]
     @user_group = UserGroup.new
+    @groups = project_childrents_select(@user)
     respond_to do |format|
       format.html
       format.js
@@ -25,12 +23,28 @@ class AddMembersController < ApplicationController
       flash[:success] = "Add Member to Group Success"
       redirect_to add_members_path
     else
-      flash[:failure] = "Add Member to Group Failure"
+      flash[:error] = "Add Member to Group Failure"
       redirect_to errors_path
     end
   end
 
   private
+
+  def project_childrents_select(user)
+    @groups = []
+    load_group(current_division)
+    @groups.flatten - user.groups
+  end
+
+  def load_group(division)
+    if division.childrens.blank?
+      @groups.push(division.groups)
+    else
+      division.childrens.each do |i|
+        load_group(i)
+      end
+    end
+  end
 
   def manager_user
     redirect_to root_path unless current_user.manager?

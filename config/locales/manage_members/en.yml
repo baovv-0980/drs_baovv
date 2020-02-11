@@ -19,3 +19,5 @@ en:
     update:
       update: Delete users for the division successfully
       update_fail: Delete users for the division fault
+    show:
+      begin_title: Manage Member Group Project

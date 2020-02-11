@@ -4,11 +4,8 @@ class AdminManageUsersController < ApplicationController
   before_action :admin_user, except: [:show]
 
   def index
-    if params[:q].blank?
-      @users = User.all.paginate(page: params[:page], per_page: Settings.users.per_page)
-    else
-      @users = User.search_user(params[:q]).paginate(page: params[:page], per_page: Settings.users.per_page)
-    end
+    @q = User.ransack(params[:q])
+    @users = @q.result.paginate(page: params[:page], per_page: Settings.users.per_page)
   end
 
   def new
@@ -29,12 +26,18 @@ class AdminManageUsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    if @user.save
-      flash[:info] = t ".create_success"
-      redirect_to admin_manage_users_path
-    else
-      flash.now[:errors] = "Create a new user errors"
+    if(params[:user][:birthday].blank? || params[:user][:birthday] > Time.now)
+      @user.errors.add(:birthday, "Start time and End time can vailid!")
+      flash.now[:error] = "Create a new user errors"
       render :new
+    else
+      if @user.save
+        flash[:info] = t ".create_success"
+        redirect_to admin_manage_users_path
+      else
+        flash.now[:error] = "Create a new user errors"
+        render :new
+      end
     end
   end
 
@@ -43,8 +46,8 @@ class AdminManageUsersController < ApplicationController
       flash[:success] = t ".update"
       redirect_to admin_manage_users_path
     else
-      flash.now[:failure] = t ".update_fault"
-      redirect_to :edit
+      flash.now[:error] = "Update User Error"
+      render :edit
     end
   end
 
@@ -53,7 +56,7 @@ class AdminManageUsersController < ApplicationController
       flash[:success] = t ".delete"
       redirect_to admin_manage_users_path
     else
-      flash[:failure] = t ".delete_fail"
+      flash[:error] = t ".delete_fail"
       redirect_to root_path
     end
   end
@@ -61,15 +64,16 @@ class AdminManageUsersController < ApplicationController
   private
 
   def admin_user
-    flash[:notice] = "You can't Admin"
-    redirect_to root_path unless current_user.admin?
+    return current_user.admin?
+    flash[:error] = "You can't Admin"
+    redirect_to root_path
   end
 
   def correct_user
     @user = User.find_by id: params[:id]
     return if @user
 
-    flash[:success] = t "admin_manage_users.not_exits"
+    flash[:error] = t "admin_manage_users.not_exits"
     redirect_to root_path
   end
 

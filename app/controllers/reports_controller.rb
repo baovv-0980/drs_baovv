@@ -2,27 +2,13 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @group_id = current_user.groups.first&.id
-    @reports = current_user.reports.where(group_id: @group_id).paginate(page: params[:page], per_page: Settings.reports.per_page)
-    @group_id ||= 1
+    @groups = current_user.groups
+    @q = current_user.reports.ransack(params[:q])
+    @reports = @q.result.paginate(page: params[:page], per_page: Settings.reports.per_page)
   end
 
   def new
     @report = current_user.reports.new
-  end
-
-  def show
-    if params[:q].blank?
-      @reports = current_user.reports.where(group_id: params[:id]).paginate(page: params[:page], per_page: Settings.reports.per_page)
-
-    else
-      @reports = current_user.reports.where(group_id: params[:id]).search_reports(params[:q]).paginate(page: params[:page], per_page: Settings.reports.per_page)
-    end
-    @group_id = params[:id]
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def create
@@ -33,7 +19,7 @@ class ReportsController < ApplicationController
       flash[:success] = t ".create_success"
       redirect_to reports_path
     rescue ActiveRecord::RecordInvalid
-      flash.now[:success] = t ".create_fault"
+      flash.now[:error] = t ".create_fault"
       render :new
     end
   end

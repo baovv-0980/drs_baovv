@@ -5,20 +5,11 @@ class ApproveRequestsController < ApplicationController
   authorize_resource class: false
 
   def index
+    @q = current_division.approval_requests.ransack(params[:q])
+    @approval_requests = @q.result.paginate(page: params[:page],per_page: Settings.requests.per_page)
     if params[:date]
       search = date_choose(params[:date])
       @approval_requests = current_division.approval_requests.range_date(search).paginate(page: params[:page], per_page: Settings.requests.per_page)
-    else
-      if params[:type] && params[:q]
-        @approval_requests = current_division.approval_requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-
-      elsif params[:type] && params[:q].blank?
-        @approval_requests = current_division.approval_requests.search_type(params[:type]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-      elsif params[:type].blank? && params[:q]
-        @approval_requests = current_division.approval_requests.joins(request: :user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
-      else
-        @approval_requests = current_division.approval_requests.paginate(page: params[:page], per_page: Settings.requests.per_page)
-      end
     end
   end
 
@@ -91,7 +82,7 @@ class ApproveRequestsController < ApplicationController
   end
 
   def flash_fault
-    flash[:success] = t ".update_fault"
+    flash[:error] = t ".update_fault"
     redirect_to errors_path
   end
 end

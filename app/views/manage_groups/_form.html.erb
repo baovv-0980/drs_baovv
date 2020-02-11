@@ -23,7 +23,7 @@
                     <div class="form-group row">
                       <%= f.label :division_id, class: "col-sm-2 col-form-label" %>
                       <div class="col-sm-4">
-                        <%= f.select :division_id, division_group_select.collect {|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
+                        <%= f.select :division_id, division_childrents_select.collect {|i| [i.name, i.id]}, {} , {class: "form-control custom-select" }  %>
                       </div>
                     </div>
 

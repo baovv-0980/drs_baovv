@@ -10,9 +10,6 @@
   </head>
 
   <body>
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
-    <% end %>
 
     <% unless current_user.blank? %>
       <%= render "layouts/header" %>
@@ -30,5 +27,6 @@
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
     </div>
+    <%= custom_bootstrap_flash %>
   </body>
 </html>

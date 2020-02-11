@@ -1,13 +1,19 @@
 <div class="card card-primary card-outline">
   <div class="card-header">
-    <h3 class="card-title"><b>Manage User</b></h3>
+    <h3 class="card-title"><b>
+      <% if group %>
+        <%= group %>
+      <% else %>
+        All Group
+      <% end %>
+    </b></h3>
     <% if @reports.blank? %>
       <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
     <% end %>
     <div class="card-tools">
-      <%= form_tag report_path(@group_id), {class: "form-inline", remote: true, method: :get} do %>
-        <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
-        <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+      <%= search_form_for @q, url: path, class: "form-inline", remote: true do |f| %>
+        <%= f.search_field :title_cont, class: "form-control mr-sm-2", placeholder: "Search" %>
+        <%= f.submit class: "btn btn-outline-success my-2 my-sm-0" do %>
           <i class="fas fa-search"></i>
         <% end %>
       <% end %>

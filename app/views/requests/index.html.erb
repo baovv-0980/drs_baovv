@@ -13,10 +13,12 @@
               <h3 class="no_data card-title">( <i>No data displayed!</i> )</h3>
             <% end %>
             <div class="card-tools">
-              <%= form_tag requests_path, class: "form-inline", method: :get do %>
-                <%= select_tag :type, raw(status_request_select),{include_blank: "Choose status", class: "form-control select"} %>
-                <%= text_field_tag :q, "", class: "form-control mr-sm-2", placeholder: "Search" %>
-                <%= button_tag class: "btn btn-outline-success my-2 my-sm-0" do %>
+              <%= search_form_for @q, url: requests_path, class: "form-inline", method: :get do |f| %>
+                <%= f.date_field :created_at_gteq, class: "form-control select" %>
+                <%= f.date_field :created_at_lteq, class: "form-control select" %>
+                <%= f.select :status_cont, raw(status_request_select), {include_blank: "Choose status"}, class: "form-control select" %>
+                <%= f.search_field :user_name_or_reason_cont_any, class: "form-control mr-sm-2", placeholder: "Search" %>
+                <%= f.submit class: "btn btn-outline-success my-2 my-sm-0" do %>
                   <i class="fas fa-search"></i>
                 <% end %>
               <% end %>

@@ -1,7 +1,7 @@
 <% provide(:title, t(".begin_title")) %>
 <div id="my_container" class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <%= render partial: "shared/head_profile", locals: {path1: admin_manage_users_path, title: "Manage User", link1: "Manage User", link2: "Create new a user"}%>
+  <%= render partial: "shared/head_profile", locals: {path1: manage_groups_path, title: "Create Group Project", link1: "Manage Group Project", link2: "Create Group Project"}%>
   <!-- Main content -->
   <%= render partial: "manage_groups/form", locals: {group: @group, path: manage_groups_path} %>
   <!-- /.content -->

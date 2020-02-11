@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3">
-          <%= render partial: "shared/profile" %>
+          <%= render partial: "shared/profile", locals: {user: current_user} %>
         </div>
         <!-- /.col -->
         <div class="col-md-9">

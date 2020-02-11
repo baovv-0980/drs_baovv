@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
       flash[:success] = t "Cap nhat thanh cong"
       redirect_to profile_path(@user)
     else
-      flash.now[:success] = t ".update_fault"
+      flash.now[:error] = t ".update_fault"
       render :edit
     end
   end
