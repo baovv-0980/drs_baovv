@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @notifications = current_user.notifications.paginate(page: params[:page], per_page: Settings.requests.per_page)

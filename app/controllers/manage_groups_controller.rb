@@ -1,7 +1,7 @@
 class ManageGroupsController < ApplicationController
+  before_action :authenticate_user!
   before_action :correct_group, only: [:destroy, :update]
   before_action :manager_user
-  before_action :logged_in_user
 
   def index
     if params[:q].blank?

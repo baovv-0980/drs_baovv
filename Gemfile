@@ -5,6 +5,7 @@ ruby "2.6.3"
 
 gem "bootsnap", ">= 1.4.2", require: false
 gem "config"
+gem "cancancan"
 gem "devise"
 gem "faker"
 gem "figaro", "~> 1.1", ">= 1.1.1"

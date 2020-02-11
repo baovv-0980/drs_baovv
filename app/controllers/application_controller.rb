@@ -1,10 +1,16 @@
 class ApplicationController < ActionController::Base
   include ProfilesHelper
+  include SessionHelper
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_action :set_locale, :notification
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = exception.message
+    redirect_to root_path
+  end
 
   protected
 
@@ -24,11 +30,4 @@ class ApplicationController < ActionController::Base
     {locale: I18n.locale}
   end
 
-  def notification
-    @notifications = current_user.notifications.all.reverse if current_user.present?
-  end
-
-  def logged_in_user
-    redirect_to signin_path unless user_signed_in?
-  end
 end

@@ -19,7 +19,7 @@
           <th scope="col"><%= t ".report_action" %></th>
         </tr>
         <tbody>
-          <%= will_paginate @reports %>
+          <%= will_paginate @reports if @reports %>
           <% @reports.each_with_index do |report, i| %>
             <%= render partial: "manager_show_reports/report", locals: {report: report, i: i} %>
           <% end %>

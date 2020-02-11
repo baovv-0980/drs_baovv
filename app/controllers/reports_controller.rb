@@ -1,12 +1,10 @@
 class ReportsController < ApplicationController
-  before_action :logged_in_user
+  before_action :authenticate_user!
 
   def index
-    # @reports = current_user.reports.paginate(page: params[:page],
-    #                                 per_page: Settings.reports.per_page)
-    @reports = current_user.reports.where(group_id: 1).paginate(page: params[:page],
-                                      per_page: Settings.reports.per_page)
-    @group_id = 1
+    @group_id = current_user.groups.first&.id
+    @reports = current_user.reports.where(group_id: @group_id).paginate(page: params[:page], per_page: Settings.reports.per_page)
+    @group_id ||= 1
   end
 
   def new
@@ -15,14 +13,12 @@ class ReportsController < ApplicationController
 
   def show
     if params[:q].blank?
-      @reports = current_user.reports.where(group_id: params[:id]).paginate(page: params[:page],
-                                      per_page: Settings.reports.per_page)
+      @reports = current_user.reports.where(group_id: params[:id]).paginate(page: params[:page], per_page: Settings.reports.per_page)
 
     else
-      @reports = current_user.reports.where(group_id: params[:id]).search_reports(params[:q]).paginate(page: params[:page],
-                                      per_page: Settings.reports.per_page)
+      @reports = current_user.reports.where(group_id: params[:id]).search_reports(params[:q]).paginate(page: params[:page], per_page: Settings.reports.per_page)
     end
-     @group_id = params[:id]
+    @group_id = params[:id]
     respond_to do |format|
       format.html
       format.js

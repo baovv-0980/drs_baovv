@@ -1,22 +1,23 @@
 class ApproveRequestsController < ApplicationController
-  before_action :manager_user
+  before_action :authenticate_user!
   before_action :correct_request, only: [:update, :show]
-  before_action :logged_in_user
+
+  authorize_resource class: false
 
   def index
     if params[:date]
       search = date_choose(params[:date])
       @approval_requests = current_division.approval_requests.range_date(search).paginate(page: params[:page], per_page: Settings.requests.per_page)
     else
-      if params[:type].blank? && params[:q].blank?
-        @approval_requests = current_division.approval_requests.paginate(page: params[:page],
-                                    per_page: Settings.requests.per_page)
+      if params[:type] && params[:q]
+        @approval_requests = current_division.approval_requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+
       elsif params[:type] && params[:q].blank?
         @approval_requests = current_division.approval_requests.search_type(params[:type]).paginate(page: params[:page],per_page: Settings.requests.per_page)
       elsif params[:type].blank? && params[:q]
         @approval_requests = current_division.approval_requests.joins(request: :user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
       else
-        @approval_requests = current_division.approval_requests.search_type(params[:type]).joins(:user).search_request(params[:q]).paginate(page: params[:page],per_page: Settings.requests.per_page)
+        @approval_requests = current_division.approval_requests.paginate(page: params[:page], per_page: Settings.requests.per_page)
       end
     end
   end
@@ -74,10 +75,6 @@ class ApproveRequestsController < ApplicationController
     current_division.parent.users.manager.each do |manager|
       user_request.notifications.create!(title: t(".title"), sender_id: current_user.id, receiver_id: manager.id)
     end
-  end
-
-  def manager_user
-    redirect_to root_path unless current_user.manager?
   end
 
   def correct_request

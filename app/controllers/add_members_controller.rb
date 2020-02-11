@@ -1,6 +1,6 @@
 class AddMembersController < ApplicationController
+  before_action :authenticate_user!
   before_action :manager_user
-  before_action :logged_in_user
 
   def index
     if params[:q].blank?

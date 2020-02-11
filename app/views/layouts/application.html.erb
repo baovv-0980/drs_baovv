@@ -13,14 +13,19 @@
     <% flash.each do |message_type, message| %>
       <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
+
     <% unless current_user.blank? %>
       <%= render "layouts/header" %>
     <% end %>
+
     <%= yield %>
+
     <% unless current_user.blank? %>
       <%= render "layouts/body" %>
     <% end %>
+
     <%= render "shared/dialog" %>
+
     <div class="container-fluid">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>

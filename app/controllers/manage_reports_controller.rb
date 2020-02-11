@@ -1,5 +1,5 @@
 class ManageReportsController < ApplicationController
-  before_action :logged_in_user
+  before_action :authenticate_user!
 
   def show
     if params[:date]

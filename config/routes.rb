@@ -7,9 +7,6 @@ Rails.application.routes.draw do
     post "/signin", to: "devise/sessions#create"
     delete "/signout", to: "devise/sessions#destroy"
   end
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
   resources :reports, except: [:edit, :update, :destroy]
   resources :requests
   resources :approve_requests, only: [:index, :show, :update]

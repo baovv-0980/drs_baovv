@@ -25,7 +25,7 @@
             </div><!-- /.card-header -->
 
             <%= render partial: "profiles/notification", collection: @notifications %>
-            <div class="container"><%= will_paginate @notifications %></div>
+            <div class="container"><%= will_paginate @notifications if @notifications %></div>
           </div>
           <!-- /.nav-tabs-custom -->
         </div>

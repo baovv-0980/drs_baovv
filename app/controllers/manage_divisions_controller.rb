@@ -1,7 +1,7 @@
 class ManageDivisionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :correct_division, only: [:destroy, :update]
   before_action :admin_user
-  before_action :logged_in_user
 
   def index
     if params[:q].blank?
