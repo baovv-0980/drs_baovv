@@ -2,7 +2,7 @@ class ApproveRequestsController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_request, only: [:update, :show]
 
-  authorize_resource class: false
+  authorize_resource class: :approve_requests
 
   def index
     @q = current_division.approval_requests.ransack(params[:q])

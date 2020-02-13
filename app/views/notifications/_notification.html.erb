@@ -1,5 +1,5 @@
 <% if notification.object_type == Settings.enum.report %>
-  <%= link_to report_path(notification.object_id, type: "notifi"), {remote: true, "data-toggle": "modal", "data-target": "#show_dialog", class: "dropdown-item"} do %>
+  <%= link_to "#", class: "dropdown-item" do %>
     <i class="fas fa-feather-alt mr-2"></i><%= notification.title %>
     <span class="float-right text-muted text-sm"><%= l(notification.created_at, format: :short) %></span>
   <% end %>

@@ -11,6 +11,7 @@
                 <div class="active tab-pane" id="settings">
                   <%= form_for(@group, url: path, class: "form-horizontal") do |f|%>
                     <%= render "shared/error_messages", object: f.object %>
+                    <%= f.hidden_field :path, value: @path %>
                     <div class="form-group row">
                       <div class="col-sm-2">
                         <%= f.label :name, class: "col-form-label" %>

@@ -22,6 +22,6 @@ Rails.application.routes.draw do
   resources :reset_passwords, only: [:edit, :update]
   resources :notifications, only: [:index, :show]
   resources :manage_groups
-  resources :group_reports, only: [:index, :show]
+  resources :manage_projects, only: [:index, :show]
   mount ActionCable.server => "/cable"
 end

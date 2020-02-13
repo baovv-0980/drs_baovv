@@ -4,6 +4,7 @@ class Group < ApplicationRecord
   belongs_to :division
   has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
+  has_many :reports, through: :users
 
   validates :description, presence: true
   validates :name, presence: true, uniqueness: true,

@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
+  authorize_resource
 
   def index
     @groups = current_user.groups
@@ -13,9 +14,10 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new report_params
+    @group_id = params[:report][:group_id]
     ActiveRecord::Base.transaction do
       @report.save!
-      # send_notification @report
+      send_notification @report, @group_id
       flash[:success] = t ".create_success"
       redirect_to reports_path
     rescue ActiveRecord::RecordInvalid
@@ -30,9 +32,18 @@ class ReportsController < ApplicationController
     params.require(:report).permit Report::PARAMS
   end
 
-  def send_notification report
-    current_division.users.manager.each do |manager|
+  def send_notification report, group_id
+    @group = Group.find_by(id: group_id)
+    @user_groups = @group.user_groups.where(role: "leader")
+    @manager_projects =  manager_project @user_groups
+    @manager_projects.each do |manager|
       report.notifications.create!(title: t(".notifi_title"), sender_id: current_user.id, receiver_id: manager.id)
     end
+  end
+
+  def manager_project user_group
+    @manager_projects = []
+    user_group.each{|i| @manager_projects.push(i.user) if i.user != current_user}
+    @manager_projects
   end
 end

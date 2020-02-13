@@ -3,6 +3,7 @@ class ManageDivisionsController < ApplicationController
   before_action :correct_division, only: [:destroy, :update]
   before_action :admin_user
 
+  authorize_resource class: :manage_divisions
   def index
     @q = Division.ransack(params[:q])
     @divisions = @q.result.paginate(page: params[:page], per_page: Settings.requests.per_page)

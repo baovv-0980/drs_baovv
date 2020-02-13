@@ -1,7 +1,7 @@
 class ManageMembersController < ApplicationController
   before_action :authenticate_user!
-  before_action :manager_user
 
+  authorize_resource class: :manage_members
   def show
     @group = Group.find_by id: params[:id]
     @q = @group.users.ransack(params[:q])
@@ -16,11 +16,5 @@ class ManageMembersController < ApplicationController
       flash[:error] = "Destroy user of group failure"
       redirect_to root_path
     end
-  end
-
-  private
-
-  def manager_user
-    redirect_to root_path unless current_user.manager?
   end
 end

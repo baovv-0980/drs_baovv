@@ -1,9 +1,7 @@
 class Notification < ApplicationRecord
   after_create :send_notification
 
-  def send_notification
-    NotificationBroadcastJob.perform_now(self, sender.name)
-  end
+  default_scope ->{order(created_at: :desc)}
 
   enum status: {waiting: 0, approval: 1, rejected: 2}
 
@@ -18,4 +16,8 @@ class Notification < ApplicationRecord
   validates :object_id, presence: true
 
   validates_associated :sender, :receiver
+
+  def send_notification
+    NotificationBroadcastJob.perform_now(self, sender.name)
+  end
 end

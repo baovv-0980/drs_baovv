@@ -7,7 +7,7 @@
     <%= link_to manage_group_path(group),{class: "my_icon", remote: true, "data-toggle": "modal", "data-target": "#show_dialog"} do %>
       <i class="nav-icon far fa-eye"></i>
     <% end %>
-    <%= link_to edit_manage_group_path(group),class: "my_icon" do %>
+    <%= link_to edit_manage_group_path(group, path: manage_groups_path),class: "my_icon" do %>
       <i class="nav-icon far fa-edit"></i>
     <% end %>
     <%= link_to manage_group_path(group), {class: "my_icon", method: :delete, data: {confirm: t(".delete_sure")}} do %>

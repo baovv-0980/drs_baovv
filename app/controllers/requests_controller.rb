@@ -1,10 +1,9 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_request, only: [:show]
+  authorize_resource
 
   def index
-    # @search = current_user.requests.ransack(params[:q])
-    @q = current_user.requests.include(:user).ransack(params[:q])
+    @q = current_user.requests.ransack(params[:q])
     @requests = @q.result.paginate(page: params[:page],per_page: Settings.requests.per_page)
   end
 

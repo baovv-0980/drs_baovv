@@ -1,7 +1,7 @@
 class ManageGroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_group, only: [:destroy, :update]
-  before_action :manager_user
+  authorize_resource class: :manage_groups
 
   def index
     @q = Group.ransack(params[:q])
@@ -22,6 +22,7 @@ class ManageGroupsController < ApplicationController
 
   def edit
     @group = Group.find_by id: params[:id]
+    @path = params[:path]
   end
 
   def create
@@ -38,7 +39,7 @@ class ManageGroupsController < ApplicationController
   def update
     if @group.update(group_params)
       flash[:success] = "Update Group Success"
-      redirect_to manage_groups_path
+      redirect_to params[:group][:path]
     else
       flash[:error] = t "Update Group Failure"
       redirect_to root_path
@@ -48,7 +49,7 @@ class ManageGroupsController < ApplicationController
   def destroy
     if @group.destroy
       flash[:success] = "Destroy Group Success"
-      redirect_to manage_groups_path
+      redirect_to request.referer || root_path
     else
       flash[:error] = "Destroy Group Success"
       redirect_to root_path
@@ -56,13 +57,6 @@ class ManageGroupsController < ApplicationController
   end
 
   private
-
-  def manager_user
-    return if current_user.manager?
-
-    flash[:error] = "You can't Manager"
-    redirect_to root_path
-  end
 
   def correct_group
     @group = Group.find_by id: params[:id]

@@ -1,7 +1,7 @@
 class AdminManageUsersController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user, only: [:destroy, :update]
-  before_action :admin_user, except: [:show]
+  authorize_resource class: :admin_manage_users
 
   def index
     @q = User.ransack(params[:q])
@@ -62,12 +62,6 @@ class AdminManageUsersController < ApplicationController
   end
 
   private
-
-  def admin_user
-    return current_user.admin?
-    flash[:error] = "You can't Admin"
-    redirect_to root_path
-  end
 
   def correct_user
     @user = User.find_by id: params[:id]
