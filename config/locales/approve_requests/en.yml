@@ -11,6 +11,7 @@ en:
       number: "#"
       list_empty: List Empty
       no_data: NO DATA
+      no_find: There is no request
     request:
       show: Show
     update:

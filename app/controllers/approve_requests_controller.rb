@@ -3,8 +3,7 @@ class ApproveRequestsController < ApplicationController
   before_action :correct_request, only: [:update, :show]
 
   def index
-    @approval_requests = current_division.approval_requests.paginate(page: params[:page],
-                                    per_page: Settings.requests.per_page)
+    @approval_requests = current_division.approval_requests.request_with_date(params[:date_form], params[:date_to]).paginate(page: params[:page], per_page: Settings.requests.per_page)
   end
 
   def show
