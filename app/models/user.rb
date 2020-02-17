@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = Settings.email
+  PARAMS = %i(name email birthday phone role division_id skill password password_confirmation).freeze
 
   enum role: {member: 0, manager: 1, admin: 2}
 
-  belongs_to :division, optional: true
+  belongs_to :division
   has_many :reports, dependent: :destroy
   has_many :requests, dependent: :destroy
 
@@ -21,12 +22,12 @@ class User < ApplicationRecord
                     uniqueness: {case_sensitive: false}
   validates :birthday, presence: true
   validates :phone, presence: true
-
+  validates :skill, presence: true
   before_save :downcase_email
 
   has_secure_password
 
-  scope :search_user, ->(search) {where "name LIKE ? OR id LIKE ? OR email LIKE ?","%#{search}%", "%#{search}%", "%#{search}%"}
+  scope :search_user, ->(search) {where "name LIKE ? OR email LIKE ?","%#{search}%", "%#{search}%"}
   scope :division_empty, -> {where division_id: nil}
 
   private

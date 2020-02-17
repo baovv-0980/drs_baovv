@@ -13,7 +13,8 @@ end
                birthday: Time.zone.now,
                phone: "0388967331",
                role: 0,
-               division_id: 1)
+               division_id: 1,
+               skill: "khong co ki nang gi")
 end
 
 users = User.order(:created_at).take(6)
